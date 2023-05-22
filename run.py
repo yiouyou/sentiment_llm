@@ -38,14 +38,17 @@ chain = LLMChain(llm=llm, prompt=prompt)
 
 
 def call_openai(_content, _example):
+    _re = ""
+    _tokens = 0
+    _cost = 0
     with get_openai_callback() as cb:
         _re = chain.run(_content=_content, _example=_example)
-        print(f"Total Tokens: {cb.total_tokens}")
-        print(f"Prompt Tokens: {cb.prompt_tokens}")
-        print(f"Completion Tokens: {cb.completion_tokens}")
-        print(f"Total Cost (USD): ${cb.total_cost}")
+        _tokens = cb.total_tokens
+        _cost = cb.total_cost
+        print(f"Tokens: {cb.total_tokens} = (Prompt {cb.prompt_tokens} + Completion {cb.completion_tokens})")
+        print(f"Cost: ${cb.total_cost}\n")
     # print(_re)
-    return _re
+    return (_re, _tokens, _cost)
 
 
 left, right = os.path.splitext(os.path.basename(_file))
@@ -58,6 +61,7 @@ with open("openai_prompt.examples", "r", encoding="utf8") as ef:
 
 _seg = "-"*40
 if os.path.exists(_file):
+    total_cost = 0
     with open(_file, encoding='utf8') as rf:
         rf_txt = rf.readlines()
     with open(_wf, "w", encoding='utf8') as wf:
@@ -74,8 +78,12 @@ if os.path.exists(_file):
                 else:
                     jj = j+"."
                 j_re = "***###***"
-                j_re = call_openai(jj, _example)
+                j_tokens = 0
+                j_cost = 0
+                (j_re, j_tokens, j_cost) = call_openai(jj, _example)
+                total_cost = total_cost + j_cost
                 j_re = j_re.replace("\n", "")
                 wf.write(f"{n}) \"{jj}\", {j_re}\n")
             wf.write(f"{_seg}{_seg}\n\n")
+        wf.write(f"\nTotal Cost: ${total_cost}\n")
 
