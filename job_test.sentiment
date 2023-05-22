@@ -1,19 +1,8 @@
---------------------------------------------------------------------------------
-1) "Opfølgning på målinger i de andre butikker.", positive (willing to communicate further)
-2) "Obs.", neutral (interjections, modal particles, nouns or adjectives with no obvious emotional meaning)
-3) "på at der altid er lidt mere og obs på at det er efterårsferie, hvis det har noget at sige for omsætningen.", positive (customer is likely to agree to our call back)
-4) "Desuden obs på, at det er meningen, det skal opbevares i længere tid.", neutral (no obvious emotional meaning)
---------------------------------------------------------------------------------
-
---------------------------------------------------------------------------------
-5) ".med en basic og en SLIM.", neutral (no obvious emotional meaning)
-6) "Den i Bones kan tages retur efter 2 måneder, den anden er købt.", positive (customer is likely to purchase in the future)
---------------------------------------------------------------------------------
-
---------------------------------------------------------------------------------
-7) "Tank leveres asap Vi borer huller og trækker rør ind i bygningen Kværnen indkøbes/faktureres og leveres ca.", positive (customer is likely to purchase in the future)
-8) "1/4-15.", neutral (dates)
---------------------------------------------------------------------------------
-
-
-Total Cost: $0.24426
+1) Opfølgning på målinger i de andre butikker., 1) positive (willing to communicate further or likely to purchase in the future)
+2) Obs., 2) neutral (interjections, modal particles, nouns or adjectives with no obvious emotional meaning)
+3) på at der altid er lidt mere og obs på at det er efterårsferie, hvis det har noget at sige for omsætningen., 3) positive (willing to communicate further or likely to purchase in the future)
+4) Desuden obs på, at det er meningen, det skal opbevares i længere tid., 4) neutral (no obvious emotional meaning)
+5) .med en basic og en SLIM., 5) neutral (no obvious emotional meaning)
+6) Den i Bones kan tages retur efter 2 måneder, den anden er købt., 6) positive (willing to purchase in the future)
+7) Tank leveres asap Vi borer huller og trækker rør ind i bygningen Kværnen indkøbes/faktureres og leveres ca., 7) positive (willing to purchase in the future)
+8) 1/4-15., 8) neutral (involves numbers, phone numbers, dates, addresses or web addresses)

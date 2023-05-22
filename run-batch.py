@@ -1,7 +1,10 @@
-# python run.py -openaikey sk-*** -input job_test.txt
+# coding=utf-8
+# python run-batch.py -openaikey sk-*** -input job_test.txt -batch 10
 import os
+import re
 import sys
 import argparse
+import pprint as pp
 from langchain import OpenAI, PromptTemplate, LLMChain
 from langchain.callbacks import get_openai_callback
 
@@ -9,9 +12,11 @@ from langchain.callbacks import get_openai_callback
 parser = argparse.ArgumentParser(description='', formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument('-openaikey', action='store', help='openai_api_key', type=str, default="")
 parser.add_argument('-input', action='store', help='input text file', type=str, default="job_test.txt")
+parser.add_argument('-batch', action='store', help='batch sentence number', type=int, default=10)
 options = parser.parse_args()
 os.environ["OPENAI_API_KEY"] = options.openaikey
 _file = options.input
+N_batch = options.batch
 
 
 llm = OpenAI(temperature=0)
@@ -25,10 +30,10 @@ Ignore previous instructions. You are a sentiment analyst of customer comments. 
 Below are some examples of sentiment analysis for some customer comments in csv format, where the customer's comments are enclosed in double quotes, and after the comma is the sentiment classification of the comments:
 {_example}
 
-The customer comment text that requires sentiment analysis is as follows:
+The customer comment texts that require sentiment analysis are as follows:
 {_content}
 
-Output the sentiment classification and a short reason for the classification in "classification(reason)" format, and output the analysis results in English lowercase:
+For each comment, there is no need to output the comment itself, just output the comment index, sentiment classification and short classification reason in the format of "index) classification(reason)", and output the analysis results in English lowercase:
 """
 prompt = PromptTemplate(
     input_variables=["_content", "_example"],
@@ -61,29 +66,62 @@ with open("openai_prompt.examples", "r", encoding="utf8") as ef:
 
 _seg = "-"*40
 if os.path.exists(_file):
+    result = ""
     total_cost = 0
+    
     with open(_file, encoding='utf8') as rf:
         rf_txt = rf.readlines()
-    with open(_wf, "w", encoding='utf8') as wf:
-        n = 0
-        for i in rf_txt:
-            i_li = i.strip()
-            # wf.write(f"> \"{i_li}\"\n")
-            wf.write(f"{_seg}{_seg}\n")
-            for j in i_li.split(". "):
-                n = n + 1
-                jj = ""
-                if j[-1] == '.':
-                    jj = j
-                else:
-                    jj = j+"."
-                j_re = "***###***"
-                j_tokens = 0
-                j_cost = 0
-                (j_re, j_tokens, j_cost) = call_openai(jj, _example)
-                total_cost = total_cost + j_cost
-                j_re = j_re.replace("\n", "")
-                wf.write(f"{n}) \"{jj}\", {j_re}\n")
-            wf.write(f"{_seg}{_seg}\n\n")
-        wf.write(f"\nTotal Cost: ${total_cost}\n")
+
+    comment_sentences = {}
+    sentences = []
+    for i in rf_txt:
+        i_li = i.strip()
+        comment_sentences[i_li] = []
+        for j in i_li.split(". "):
+            jj = ""
+            if j[-1] == '.':
+                jj = j
+            else:
+                jj = j+"."
+            comment_sentences[i_li].append({jj: {}})
+            sentences.append(jj)
+    # print(len(comment_sentences))
+    # pp.pprint(comment_sentences)
+    # print(len(sentences))
+    # pp.pprint(sentences)
+
+    print("-" * 40)
+    for i in range(0, len(sentences)):
+        if i % N_batch == 0:
+            batch = sentences[i:i+N_batch]
+            # print(batch)
+            _content = ""
+            n = int(i / N_batch)
+            for j in range(0, len(batch)):
+                _content = _content + f"{n*N_batch +j +1}) {batch[j]}\n"
+            print(_content)
+            (b_re, b_tokens, b_cost) = call_openai(_content, _example)
+            total_cost += b_cost
+            result += b_re + "\n"
+    result = re.sub(r" *\(", " (", result.lower())
+    result = re.sub(r"\n+", "\n", result)
+    print("-" * 40)
+    print(result)
+    print(total_cost)
+
+    _sentiments = result.split("\n")
+    sentiments = []
+    for i in _sentiments:
+        if i != "":
+            sentiments.append(i)
+    # print(sentiments)
+
+    if len(sentences) == len(sentiments):
+        with open(_wf, "w", encoding='utf8') as wf:
+            for i in range(0, len(sentences)):
+                i_re= f"{i+1}) {sentences[i]}, {sentiments[i]}\n"
+                # print(i_re)
+                wf.write(i_re)
+    else:
+        print("Error: len(sentences) != len(sentiments)")
 
