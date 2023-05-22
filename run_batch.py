@@ -64,7 +64,6 @@ with open("openai_prompt.examples", "r", encoding="utf8") as ef:
 # print(_example)
 
 
-_seg = "-"*40
 if os.path.exists(_file):
     result = ""
     total_cost = 0
