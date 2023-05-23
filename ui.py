@@ -1,4 +1,3 @@
-import string
 import gradio as gr
 import os
 
@@ -23,15 +22,14 @@ def chg_color_file(file):
 #         return gr.update(variant="secondary")
 
 def run_sentiment_analysis(key, file):
-    file_name = file.name
-    if key and file_name:
-        return sentiment_llm(key, file_name, 10)
-    elif not file_name and key:
-        return "ERROR: Please upload a TXT file first!"
-    elif not key and file_name:
-        return "ERROR: Please input your OpenAI API Key first!"
+    if key and file:
+        return sentiment_llm(key, file.name, 10)
+    elif not file and key:
+        return ["ERROR: Please upload a TXT file first!", "", ""]
+    elif not key and file:
+        return ["ERROR: Please input your OpenAI API Key first!", "", ""]
     else:
-        return "ERROR: Please input your OpenAI API Key AND upload a TXT file first!"
+        return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!", "", ""]
 
 
 def call_openai(chain, _content, _example):
