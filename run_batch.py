@@ -65,7 +65,7 @@ with open("openai_prompt.examples", "r", encoding="utf8") as ef:
 
 
 if os.path.exists(_file):
-    result = ""
+    all_re = ""
     total_cost = 0
     
     with open(_file, encoding='utf8') as rf:
@@ -101,14 +101,14 @@ if os.path.exists(_file):
             print(_content)
             (b_re, b_tokens, b_cost) = call_openai(_content, _example)
             total_cost += b_cost
-            result += b_re + "\n"
-    result = re.sub(r" *\(", " (", result.lower())
-    result = re.sub(r"\n+", "\n", result)
+            all_re += b_re + "\n"
+    all_re = re.sub(r" *\(", " (", all_re.lower())
+    all_re = re.sub(r"\n+", "\n", all_re)
     print("-" * 40)
-    print(result)
+    print(all_re)
     print(total_cost)
 
-    _sentiments = result.split("\n")
+    _sentiments = all_re.split("\n")
     sentiments = []
     for i in _sentiments:
         if i != "":
