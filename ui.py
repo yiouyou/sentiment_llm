@@ -2,24 +2,29 @@ import gradio as gr
 import os
 
 
+output_sentiments_file = "sentiments.csv"
+
 def read_file(file):
     if file:
         with open(file.name, encoding="utf-8") as f:
             content = f.read()
             return content
 
-def chg_color_file(file):
+
+def chg_btn_color_if_file(file):
     if file:
         return gr.update(variant="primary")
     else:
         return gr.update(variant="secondary")
 
-# def chg_color_text(text):
-#     print(f"text: {text}")
-#     if text:
-#         return gr.update(variant="primary")
-#     else:
-#         return gr.update(variant="secondary")
+
+def show_generated_file(text):
+    # print(f"text: {text}")
+    if text:
+        return gr.update(value=output_sentiments_file)
+    else:
+        return gr.update(value=output_sentiments_file)
+
 
 def run_sentiment_analysis(key, file):
     if key and file:
@@ -58,7 +63,8 @@ def sentiment_llm(key, file_name, N_batch):
     # print(_key)
     _log = ""
     left, right = os.path.splitext(os.path.basename(_file))
-    _output = f"{left}.sentiment"
+    global output_sentiments_file
+    output_sentiments_file = f"{left}_sentiment.csv"
     os.environ["OPENAI_API_KEY"] = _key
     llm = OpenAI(temperature=0)
     template = """
@@ -129,16 +135,17 @@ For each comment, there is no need to output the comment itself, just output the
         _log += f"\nTotal Cost: ${str(total_cost)}\n"
         sentences = []
         if len(_sentences) == len(sentiments):
-            with open(_output, "w", encoding='utf-8') as wf:
+            with open(output_sentiments_file, "w", encoding='utf-8') as wf:
                 for i in range(0, len(_sentences)):
                     sentences.append(f"{i+1}) {_sentences[i]}")
                     i_re= f"{i+1}) {_sentences[i]}, {sentiments[i]}\n"
                     # print(i_re)
                     wf.write(i_re)
-                _log += f"Write file: {_output}" + "\n"
+                _log += f"Write file: {output_sentiments_file}" + "\n"
         else:
             _log += "Error: len(sentences) != len(sentiments)" + "\n"
     return [_log, "\n".join(sentences), "\n".join(sentiments)]
+
 
 
 with gr.Blocks(title = "Customer Sentiment Analysis by LLM") as demo:
@@ -154,7 +161,7 @@ with gr.Blocks(title = "Customer Sentiment Analysis by LLM") as demo:
                 upload_box.change(read_file, inputs=[upload_box], outputs=[input_content])
         with gr.Row():
             start_btn = gr.Button("Start Analysis", variant="secondary")
-            upload_box.change(chg_color_file, inputs=[upload_box], outputs=[start_btn])
+            upload_box.change(chg_btn_color_if_file, inputs=[upload_box], outputs=[start_btn])
             # download_btn = gr.Button("Download Sentiments", variant="secondary")
         with gr.Row():
             output_log = gr.Textbox(label="Logging", placeholder="Logging", lines=10, interactive=False)
@@ -165,12 +172,16 @@ with gr.Blocks(title = "Customer Sentiment Analysis by LLM") as demo:
             with gr.Column():
                 output_sentiments = gr.Textbox(label="Sentiments", placeholder="Sentiments", lines=10, interactive=False)
             start_btn.click(run_sentiment_analysis, inputs=[openai_api_key, upload_box], outputs=[output_log, output_comments, output_sentiments])
-            # output_sentiments.change(chg_color_text, inputs=[output_sentiments], outputs=[download_btn])
+            output_sentiments.change(show_generated_file, inputs=[output_sentiments], outputs=[download_box])
+
 
 
 from fastapi import FastAPI
 app = FastAPI()
 app = gr.mount_gradio_app(app, demo, path="/")
 
+
+
 if __name__ == "__main__":
     demo.queue(concurrency_count=1).launch()
+

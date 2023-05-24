@@ -57,7 +57,7 @@ def call_openai(_content, _example):
 
 
 left, right = os.path.splitext(os.path.basename(_file))
-_wf = f"{left}.sentiment"
+_wf = f"{left}_sentiment.csv"
 
 with open("openai_prompt.examples", "r", encoding="utf8") as ef:
     _example = "".join(ef.readlines())
