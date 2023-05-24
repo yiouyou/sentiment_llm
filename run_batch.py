@@ -57,7 +57,7 @@ def call_openai(_content, _example):
 
 
 left, right = os.path.splitext(os.path.basename(_file))
-_wf = f"{left}_sentiment.csv"
+_wf = f"{left}_sentiments.txt"
 
 with open("openai_prompt.examples", "r", encoding="utf8") as ef:
     _example = "".join(ef.readlines())
@@ -118,7 +118,7 @@ if os.path.exists(_file):
     if len(sentences) == len(sentiments):
         with open(_wf, "w", encoding='utf8') as wf:
             for i in range(0, len(sentences)):
-                i_re= f"{i+1}) {sentences[i]}, {sentiments[i]}\n"
+                i_re= f"{i+1}) \"{sentences[i]}\"|{sentiments[i]}\n"
                 # print(i_re)
                 wf.write(i_re)
     else:

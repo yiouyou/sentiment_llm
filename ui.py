@@ -2,7 +2,7 @@ import gradio as gr
 import os
 
 
-output_sentiments_file = "sentiments.csv"
+output_sentiments_file = "sentiments.txt"
 
 def read_file(file):
     if file:
@@ -64,7 +64,7 @@ def sentiment_llm(key, file_name, N_batch):
     _log = ""
     left, right = os.path.splitext(os.path.basename(_file))
     global output_sentiments_file
-    output_sentiments_file = f"{left}_sentiment.csv"
+    output_sentiments_file = f"{left}_sentiments.txt"
     os.environ["OPENAI_API_KEY"] = _key
     llm = OpenAI(temperature=0)
     template = """
@@ -138,7 +138,7 @@ For each comment, there is no need to output the comment itself, just output the
             with open(output_sentiments_file, "w", encoding='utf-8') as wf:
                 for i in range(0, len(_sentences)):
                     sentences.append(f"{i+1}) {_sentences[i]}")
-                    i_re= f"{i+1}) {_sentences[i]}, {sentiments[i]}\n"
+                    i_re= f"{i+1}) \"{_sentences[i]}\"|{sentiments[i]}\n"
                     # print(i_re)
                     wf.write(i_re)
                 _log += f"Write file: {output_sentiments_file}" + "\n"

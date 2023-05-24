@@ -52,7 +52,7 @@ def call_openai(_content, _example):
 
 
 left, right = os.path.splitext(os.path.basename(_file))
-_wf = f"{left}_sentiment.csv"
+_wf = f"{left}_sentiments.txt"
 
 with open("openai_prompt.examples", "r", encoding="utf8") as ef:
     _example = "".join(ef.readlines())
@@ -83,7 +83,7 @@ if os.path.exists(_file):
                 (j_re, j_tokens, j_cost) = call_openai(jj, _example)
                 total_cost = total_cost + j_cost
                 j_re = j_re.replace("\n", "")
-                wf.write(f"{n}) \"{jj}\", {j_re}\n")
+                wf.write(f"{n}) \"{jj}\"|{j_re}\n")
             wf.write(f"{_seg}{_seg}\n\n")
         wf.write(f"\nTotal Cost: ${total_cost}\n")
 
