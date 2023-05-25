@@ -203,7 +203,7 @@ def api_sentiment_llm(key, txt, N_batch):
 
 @app.post("/api/v1/comments/")
 async def sentiment_analysis_api(txt: str):
-    key = "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"
+    key = "sk-**********"
     N_batch = 10
     _log = ""
     _sentences_str = ""
