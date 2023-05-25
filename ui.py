@@ -2,6 +2,7 @@ import gradio as gr
 import os
 
 
+
 output_sentiments_file = "sentiments.txt"
 
 def read_file(file):
@@ -10,13 +11,11 @@ def read_file(file):
             content = f.read()
             return content
 
-
 def chg_btn_color_if_file(file):
     if file:
         return gr.update(variant="primary")
     else:
         return gr.update(variant="secondary")
-
 
 def show_generated_file(text):
     # print(f"text: {text}")
@@ -24,17 +23,6 @@ def show_generated_file(text):
         return gr.update(value=output_sentiments_file)
     else:
         return gr.update(value=output_sentiments_file)
-
-
-def run_sentiment_analysis(key, file):
-    if key and file:
-        return sentiment_llm(key, file.name, 10)
-    elif not file and key:
-        return ["ERROR: Please upload a TXT file first!", "", ""]
-    elif not key and file:
-        return ["ERROR: Please input your OpenAI API Key first!", "", ""]
-    else:
-        return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!", "", ""]
 
 
 def call_openai(chain, _content, _example):
@@ -52,20 +40,15 @@ def call_openai(chain, _content, _example):
     # print(_re)
     return (_re, _tokens, _cost, _log)
 
-
-def sentiment_llm(key, file_name, N_batch):
+def sentiment_openai(key, txt_lines, N_batch):
     import os
     import re
     from langchain import OpenAI, PromptTemplate, LLMChain
-    _file = file_name
-    _key = key
-    # print(_file)
-    # print(_key)
     _log = ""
-    left, right = os.path.splitext(os.path.basename(_file))
-    global output_sentiments_file
-    output_sentiments_file = f"{left}_sentiments.txt"
-    os.environ["OPENAI_API_KEY"] = _key
+    _sentences_str = ""
+    _sentiments_str = ""
+    ##### set OpenAI API Key and prompt
+    os.environ["OPENAI_API_KEY"] = key
     llm = OpenAI(temperature=0)
     template = """
 Ignore previous instructions. You are a sentiment analyst of customer comments. You assist the company in further operations by dividing customer comments into three categories: positive, negative and neutral. The main purpose is to judge whether customers have a positive attitude towards the products we are trying to sell to them. When analyzing comments, in addition to the general sentiment analysis principles, the following rules must be followed:
@@ -86,66 +69,90 @@ For each comment, there is no need to output the comment itself, just output the
         input_variables=["_content", "_example"],
         template=template,
     )
-    chain = LLMChain(llm=llm, prompt=prompt)
     with open("openai_prompt.examples", "r", encoding="utf-8") as ef:
         _example = "".join(ef.readlines())
-    # print(_example)
-    if os.path.exists(_file):
-        all_re = ""
-        total_cost = 0
-        with open(_file, encoding='utf-8') as rf:
-            rf_txt = rf.readlines()
-        # comment_sentences = {}
-        _sentences = []
-        for i in rf_txt:
-            i_li = i.strip()
-            # comment_sentences[i_li] = []
-            for j in i_li.split(". "):
-                jj = ""
-                if j[-1] == '.':
-                    jj = j
-                else:
-                    jj = j+"."
-                # comment_sentences[i_li].append({jj: {}})
-                _sentences.append(jj)
-        _log += "-" * 40 + "\n"
+    chain = LLMChain(llm=llm, prompt=prompt)
+    ##### split comment to sentences
+    _sentences = []
+    for i in txt_lines:
+        i_li = i.strip()
+        for j in i_li.split(". "):
+            jj = ""
+            if j[-1] == '.':
+                jj = j
+            else:
+                jj = j+"."
+            _sentences.append(jj)
+    ##### call OpenAI API with _content and _example
+    _log += "-" * 40 + "\n"
+    all_re = ""
+    total_cost = 0
+    for i in range(0, len(_sentences)):
+        if i % N_batch == 0:
+            batch = _sentences[i:i+N_batch]
+            # print(batch)
+            _content = ""
+            n = int(i / N_batch)
+            for j in range(0, len(batch)):
+                _content = _content + f"{n*N_batch +j +1}) {batch[j]}\n"
+            _log += _content
+            (b_re, b_tokens, b_cost, b_log) = call_openai(chain, _content, _example)
+            _log += b_log
+            total_cost += b_cost
+            all_re += b_re + "\n"
+    ##### parse response, generate _log, _sentences_str and _sentiments_str
+    sentences = []
+    sentiments = []
+    all_re = re.sub(r" *\(", " (", all_re.lower())
+    all_re = re.sub(r"\n+", "\n", all_re)
+    _sentiments = all_re.split("\n")
+    for i in _sentiments:
+        if i != "":
+            sentiments.append(i)
+    _log += "-" * 40 + "\n"
+    _log += "\n".join(sentiments) + "\n"
+    _log += "-" * 40 + "\n"
+    _log += f"\nTotal Cost: ${str(total_cost)}\n"
+    if len(_sentences) == len(sentiments):
         for i in range(0, len(_sentences)):
-            if i % N_batch == 0:
-                batch = _sentences[i:i+N_batch]
-                # print(batch)
-                _content = ""
-                n = int(i / N_batch)
-                for j in range(0, len(batch)):
-                    _content = _content + f"{n*N_batch +j +1}) {batch[j]}\n"
-                _log += _content
-                (b_re, b_tokens, b_cost, b_log) = call_openai(chain, _content, _example)
-                _log += b_log
-                total_cost += b_cost
-                all_re += b_re + "\n"
-        all_re = re.sub(r" *\(", " (", all_re.lower())
-        all_re = re.sub(r"\n+", "\n", all_re)
-        _sentiments = all_re.split("\n")
-        sentiments = []
-        for i in _sentiments:
-            if i != "":
-                sentiments.append(i)
-        _log += "-" * 40 + "\n"
-        _log += "\n".join(sentiments) + "\n"
-        _log += "-" * 40 + "\n"
-        _log += f"\nTotal Cost: ${str(total_cost)}\n"
-        sentences = []
-        if len(_sentences) == len(sentiments):
-            with open(output_sentiments_file, "w", encoding='utf-8') as wf:
-                for i in range(0, len(_sentences)):
-                    sentences.append(f"{i+1}) {_sentences[i]}")
-                    i_re= f"{i+1}) \"{_sentences[i]}\"|{sentiments[i]}\n"
-                    # print(i_re)
-                    wf.write(i_re)
-                _log += f"Write file: {output_sentiments_file}" + "\n"
-        else:
-            _log += "Error: len(sentences) != len(sentiments)" + "\n"
-    return [_log, "\n".join(sentences), "\n".join(sentiments)]
+            sentences.append(f"{i+1}) \"{_sentences[i]}\"")
+        _sentences_str = "\n".join(sentences)
+        _sentiments_str = "\n".join(sentiments)
+    else:
+        _log += "Error: len(sentences) != len(sentiments)" + "\n"
+    return [_log, _sentences_str, _sentiments_str]
 
+def sentiment_llm(key, file_name, N_batch):
+    import os
+    _log = ""
+    _sentences_str = ""
+    _sentiments_str = ""
+    if os.path.exists(file_name):
+        left, right = os.path.splitext(os.path.basename(file_name))
+        global output_sentiments_file
+        output_sentiments_file = f"{left}_sentiments.txt"
+        with open(file_name, encoding='utf-8') as rf:
+            txt_lines = rf.readlines()
+    [_log, _sentences_str, _sentiments_str] = sentiment_openai(key, txt_lines, N_batch)
+    if _sentences_str != "" and _sentiments_str != "":
+        sentences = _sentences_str.split("\n")
+        sentiments = _sentiments_str.split("\n")
+        with open(output_sentiments_file, "w", encoding='utf-8') as wf:
+            for i in range(0, len(sentences)):
+                i_re= f"{sentences[i]}|{sentiments[i]}\n"
+                wf.write(i_re)
+            _log += f"Write file: {output_sentiments_file}" + "\n"
+    return [_log, _sentences_str, _sentiments_str]
+
+def run_sentiment_llm(key, file):
+    if key and file:
+        return sentiment_llm(key, file.name, 10)
+    elif not file and key:
+        return ["ERROR: Please upload a TXT file first!", "", ""]
+    elif not key and file:
+        return ["ERROR: Please input your OpenAI API Key first!", "", ""]
+    else:
+        return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!", "", ""]
 
 
 with gr.Blocks(title = "Customer Sentiment Analysis by LLM") as demo:
@@ -171,15 +178,40 @@ with gr.Blocks(title = "Customer Sentiment Analysis by LLM") as demo:
                 output_comments = gr.Textbox(label="Comments", placeholder="Comments", lines=10, interactive=False)
             with gr.Column():
                 output_sentiments = gr.Textbox(label="Sentiments", placeholder="Sentiments", lines=10, interactive=False)
-            start_btn.click(run_sentiment_analysis, inputs=[openai_api_key, upload_box], outputs=[output_log, output_comments, output_sentiments])
+            start_btn.click(run_sentiment_llm, inputs=[openai_api_key, upload_box], outputs=[output_log, output_comments, output_sentiments])
             output_sentiments.change(show_generated_file, inputs=[output_sentiments], outputs=[download_box])
 
 
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
+import json
 app = FastAPI()
-app = gr.mount_gradio_app(app, demo, path="/")
 
+@app.get("/")
+def index():
+    return {"message": "Customer Sentiment Analysis by LLM"}
+
+app = gr.mount_gradio_app(app, demo, path="/ui")
+
+def api_sentiment_llm(key, txt, N_batch):
+    _log = ""
+    _sentences_str = ""
+    _sentiments_str = ""
+    txt_lines = txt.split("\n")
+    [_log, _sentences_str, _sentiments_str] = sentiment_openai(key, txt_lines, N_batch)
+    return [_log, _sentences_str, _sentiments_str]
+
+@app.post("/api/v1/comments/")
+async def sentiment_analysis_api(txt: str):
+    key = "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"
+    N_batch = 10
+    _log = ""
+    _sentences_str = ""
+    _sentiments_str = ""
+    [_log, _sentences_str, _sentiments_str] = api_sentiment_llm(key, txt, N_batch)
+    res = {"log": _log, "sentences": _sentences_str, "sentiments": _sentiments_str}
+    json_str = json.dumps(res, indent=4, default=str)
+    return Response(content=json_str, media_type='application/json')
 
 
 if __name__ == "__main__":
