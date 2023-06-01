@@ -41,7 +41,8 @@ def call_openai(_content, _example):
         _re = chain.run(_content=_content, _example=_example)
         _tokens = cb.total_tokens
         _cost = cb.total_cost
-        print(f"Tokens: {cb.total_tokens} = (Prompt {cb.prompt_tokens} + Completion {cb.completion_tokens})")
+        print(
+            f"Tokens: {cb.total_tokens} = (Prompt {cb.prompt_tokens} + Completion {cb.completion_tokens})")
         print(f"Cost: ${cb.total_cost}\n")
     # print(_re)
     return (_re, _tokens, _cost)
@@ -97,10 +98,10 @@ def sentiment_llm(_txt):
     _out = ""
     if len(sentences) == len(sentiments):
         for i in range(0, len(sentences)):
-            i_re= f"{i+1}) \"{sentences[i]}\"|{sentiments[i]}\n"
+            i_re = f"{i+1}) \"{sentences[i]}\"|{sentiments[i]}\n"
             # print(i_re)
             _out += i_re
     else:
         print("Error: len(sentences) != len(sentiments)")
 
-    return _output
+    return _out
