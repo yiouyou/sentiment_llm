@@ -215,5 +215,5 @@ async def sentiment_analysis_api(txt: str):
 
 
 if __name__ == "__main__":
-    demo.queue(concurrency_count=1).launch()
+    demo.queue(concurrency_count=1).launch(share=True)
 
