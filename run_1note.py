@@ -111,7 +111,7 @@ def main(_txt):
     else:
         print("Error: len(sentences) != len(sentiments)")
 
-    return 
+    return _out
 
 if _txt:
     output = main(_txt)
