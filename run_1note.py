@@ -114,5 +114,6 @@ def main(_txt):
     return 
 
 if _txt:
-    main(_txt)
+    output = main(_txt)
+    print(output)
 
