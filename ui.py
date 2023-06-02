@@ -76,13 +76,14 @@ For each comment, there is no need to output the comment itself, just output the
     _sentences = []
     for i in txt_lines:
         i_li = i.strip()
-        for j in i_li.split(". "):
-            jj = ""
-            if j[-1] == '.':
-                jj = j
-            else:
-                jj = j+"."
-            _sentences.append(jj)
+        if i_li:
+            for j in i_li.split(". "):
+                jj = ""
+                if j[-1] == '.':
+                    jj = j
+                else:
+                    jj = j+"."
+                _sentences.append(jj)
     ##### call OpenAI API with _content and _example
     _log += "-" * 40 + "\n"
     all_re = ""
