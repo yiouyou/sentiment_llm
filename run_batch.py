@@ -71,19 +71,20 @@ if os.path.exists(_file):
     with open(_file, encoding='utf8') as rf:
         rf_txt = rf.readlines()
 
-    comment_sentences = {}
+    # comment_sentences = {}
     sentences = []
     for i in rf_txt:
         i_li = i.strip()
-        comment_sentences[i_li] = []
-        for j in i_li.split(". "):
-            jj = ""
-            if j[-1] == '.':
-                jj = j
-            else:
-                jj = j+"."
-            comment_sentences[i_li].append({jj: {}})
-            sentences.append(jj)
+        # comment_sentences[i_li] = []
+        if i_li:
+            for j in i_li.split(". "):
+                jj = ""
+                if j[-1] == '.':
+                    jj = j
+                else:
+                    jj = j+"."
+                # comment_sentences[i_li].append({jj: {}})
+                sentences.append(jj)
     # print(len(comment_sentences))
     # pp.pprint(comment_sentences)
     # print(len(sentences))
