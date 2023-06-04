@@ -6,7 +6,7 @@ from langchain import OpenAI, PromptTemplate, LLMChain
 from langchain.callbacks import get_openai_callback
 
 
-os.environ["OPENAI_API_KEY"] = ""
+os.environ["OPENAI_API_KEY"] = "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"
 N_batch = 20
 
 
@@ -69,7 +69,7 @@ def sentiment_llm(_txt):
     # print(len(sentences))
     # pp.pprint(sentences)
 
-    print("-" * 40)
+    # print("-" * 40)
     for i in range(0, len(sentences)):
         if i % N_batch == 0:
             batch = sentences[i:i+N_batch]
@@ -84,9 +84,9 @@ def sentiment_llm(_txt):
             all_re += b_re + "\n"
     all_re = re.sub(r" *\(", " (", all_re.lower())
     all_re = re.sub(r"\n+", "\n", all_re)
-    print("-" * 40)
-    print(all_re)
-    print(total_cost)
+    # print("-" * 40)
+    # print(all_re)
+    # print(total_cost)
 
     _sentiments = all_re.split("\n")
     sentiments = []
@@ -99,9 +99,9 @@ def sentiment_llm(_txt):
     if len(sentences) == len(sentiments):
         for i in range(0, len(sentences)):
             i_re = f"{i+1}) \"{sentences[i]}\"|{sentiments[i]}\n"
-            # print(i_re)
             _out += i_re
+        print(f"return:\n{_out}")
     else:
         print("Error: len(sentences) != len(sentiments)")
 
-    return _out
+    return [_out, str(total_cost)]

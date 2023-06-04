@@ -1,10 +1,10 @@
 {
-    "name": "d:\\_Ai\\sentiment_llm\\openflow_agent\\sentimentagent-0.0.1",
+    "name": "sentimentagent",
     "version": "0.0.1",
     "description": "Example agent, please change",
-    "main": "main.js",
+    "main": "main.py",
     "openiap": {
-        "daemon": false,
+        "daemon": true,
         "chromium": false,
         "language": "nodejs",
         "typescript": false
