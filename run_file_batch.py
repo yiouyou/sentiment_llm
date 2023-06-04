@@ -1,5 +1,5 @@
 # coding=utf-8
-# python run_batch.py -openaikey sk-*** -input job_test.txt -batch 10
+# python run_file_batch.py -openaikey sk-*** -input job_test.txt -batch 10
 import os
 import re
 import sys
