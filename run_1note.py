@@ -32,7 +32,9 @@ Below are some examples of sentiment analysis for some customer comments in csv 
 The customer comment texts that require sentiment analysis are as follows:
 {_content}
 
-For each comment, there is no need to output the comment itself, just output the comment index, sentiment classification and short classification reason in the format of "index) classification(reason)", and output the analysis results in English lowercase:
+For each comment, there is no need to output the comment itself, just output the comment index, sentiment classification and short classification reason in the format of "index) classification(reason)", and output the analysis results in English lowercase.
+
+In addition, please identify parameters of the 7P model in upper given customer note and their related segments, and output in json format in which each 7P should be the MAIN key (please make sure that if there is no related segment, DO NOT show the 7P).
 """
 prompt = PromptTemplate(
     input_variables=["_content", "_example"],
