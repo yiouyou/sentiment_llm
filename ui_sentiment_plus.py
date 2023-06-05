@@ -72,7 +72,7 @@ def llm_7P(key, file_name):
     print(f"file_name: {file_name}")
     if os.path.exists(file_name):
         left, right = os.path.splitext(os.path.basename(file_name))
-        global output_sentiments_file
+        global output_7P_file
         output_7P_file = f"{left}_7P.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
@@ -107,7 +107,7 @@ def llm_competitor(key, file_name):
     print(f"file_name: {file_name}")
     if os.path.exists(file_name):
         left, right = os.path.splitext(os.path.basename(file_name))
-        global output_sentiments_file
+        global output_competitor_file
         output_competitor_file = f"{left}_competitor.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
