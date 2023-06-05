@@ -21,27 +21,6 @@ def chg_btn_color_if_file(file):
     else:
         return gr.update(variant="secondary")
 
-def show_sentiment_file(text):
-    # print(f"text: {text}")
-    if text:
-        return gr.update(value=output_sentiments_file)
-    else:
-        return gr.update(value=output_sentiments_file)
-
-def show_7P_file(text):
-    # print(f"text: {text}")
-    if text:
-        return gr.update(value=output_7P_file)
-    else:
-        return gr.update(value=output_7P_file)
-
-def show_competitor_file(text):
-    # print(f"text: {text}")
-    if text:
-        return gr.update(value=output_competitor_file)
-    else:
-        return gr.update(value=output_competitor_file)
-
 
 def llm_sentiment(key, file_name, N_batch):
     import os
@@ -76,6 +55,13 @@ def run_llm_sentiment(key, file):
     else:
         return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!", "", ""]
 
+def show_sentiment_file(text):
+    # print(f"text: {text}")
+    if text:
+        return gr.update(value=output_sentiments_file)
+    else:
+        return gr.update(value=output_sentiments_file)
+
 
 def llm_7P(key, file_name):
     import os
@@ -103,6 +89,13 @@ def run_llm_7P(key, file):
     else:
         return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!", "", ""]
 
+def show_7P_file(text):
+    # print(f"text: {text}")
+    if text:
+        return gr.update(value=output_7P_file)
+    else:
+        return gr.update(value=output_7P_file)
+
 
 def llm_competitor(key, file_name):
     import os
@@ -129,6 +122,13 @@ def run_llm_competitor(key, file):
         return ["ERROR: Please input your OpenAI API Key first!", "", ""]
     else:
         return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!", "", ""]
+
+def show_competitor_file(text):
+    # print(f"text: {text}")
+    if text:
+        return gr.update(value=output_competitor_file)
+    else:
+        return gr.update(value=output_competitor_file)
 
 
 
