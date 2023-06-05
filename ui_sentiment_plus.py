@@ -76,8 +76,8 @@ def llm_7P(key, file_name):
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
         [_log, _7P_str, _total_cost] = P7_openai(key, txt_lines)
-        with open(output_7P_file, "w", encoding='utf-8') as wf:
-            wf.write(_7P_str)
+    with open(output_7P_file, "w", encoding='utf-8') as wf:
+        wf.write(_7P_str)
     return [_7P_str]
 
 def run_llm_7P(key, file):
@@ -111,8 +111,8 @@ def llm_competitor(key, file_name):
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
         [_log, _competitor_str, _total_cost] = competitor_openai(key, txt_lines)
-        with open(output_competitor_file, "w", encoding='utf-8') as wf:
-            wf.write(_competitor_str)
+    with open(output_competitor_file, "w", encoding='utf-8') as wf:
+        wf.write(_competitor_str)
     return [_competitor_str]
 
 def run_llm_competitor(key, file):
