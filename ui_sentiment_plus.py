@@ -28,6 +28,7 @@ def llm_sentiment(key, file_name, N_batch):
     _sentences_str = ""
     _sentiments_str = ""
     _total_cost = 0
+    print(f"file_name: {file_name}")
     if os.path.exists(file_name):
         left, right = os.path.splitext(os.path.basename(file_name))
         global output_sentiments_file
