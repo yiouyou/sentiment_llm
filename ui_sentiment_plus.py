@@ -43,82 +43,82 @@ def show_competitor_file(text):
         return gr.update(value=output_competitor_file)
 
 
-def sentiment_llm(key, file_name, N_batch):
+def llm_sentiment(key, file_name, N_batch):
     import os
     _log = ""
     _sentences_str = ""
     _sentiments_str = ""
+    _total_cost = 0
     if os.path.exists(file_name):
         left, right = os.path.splitext(os.path.basename(file_name))
         global output_sentiments_file
         output_sentiments_file = f"{left}_sentiments.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-    [_log, _sentences_str, _sentiments_str] = sentiment_openai(key, txt_lines, N_batch)
-    if _sentences_str != "" and _sentiments_str != "":
-        sentences = _sentences_str.split("\n")
-        sentiments = _sentiments_str.split("\n")
-        with open(output_sentiments_file, "w", encoding='utf-8') as wf:
-            for i in range(0, len(sentences)):
-                i_re= f"{sentences[i]}|{sentiments[i]}\n"
-                wf.write(i_re)
-            _log += f"Write file: {output_sentiments_file}" + "\n"
+        [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, txt_lines, N_batch)
+        if _sentences_str != "" and _sentiments_str != "":
+            sentences = _sentences_str.split("\n")
+            sentiments = _sentiments_str.split("\n")
+            with open(output_sentiments_file, "w", encoding='utf-8') as wf:
+                for i in range(0, len(sentences)):
+                    i_re= f"{sentences[i]}|{sentiments[i]}\n"
+                    wf.write(i_re)
+                _log += f"Write file: {output_sentiments_file}" + "\n"
     return [_log, _sentences_str, _sentiments_str]
 
+def run_llm_sentiment(key, file):
+    if key and file:
+        return llm_sentiment(key, file.name, 10)
+    elif not file and key:
+        return ["ERROR: Please upload a TXT file first!", "", ""]
+    elif not key and file:
+        return ["ERROR: Please input your OpenAI API Key first!", "", ""]
+    else:
+        return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!", "", ""]
 
-def P7_llm(key, file_name):
+
+def llm_7P(key, file_name):
     import os
     _log = ""
     _7P_str = ""
+    _total_cost = 0
     if os.path.exists(file_name):
         left, right = os.path.splitext(os.path.basename(file_name))
         global output_sentiments_file
         output_7P_file = f"{left}_7P.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-    [_log, _7P_str, _total_cost] = P7_openai(key, txt_lines)
+        [_log, _7P_str, _total_cost] = P7_openai(key, txt_lines)
     return [_7P_str]
 
+def run_llm_7P(key, file):
+    if key and file:
+        return llm_7P(key, file.name)
+    elif not file and key:
+        return ["ERROR: Please upload a TXT file first!", "", ""]
+    elif not key and file:
+        return ["ERROR: Please input your OpenAI API Key first!", "", ""]
+    else:
+        return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!", "", ""]
 
-def competitor_llm(key, file_name):
+
+def llm_competitor(key, file_name):
     import os
     _log = ""
     _competitor_str = ""
+    _total_cost = 0
     if os.path.exists(file_name):
         left, right = os.path.splitext(os.path.basename(file_name))
         global output_sentiments_file
         output_competitor_file = f"{left}_competitor.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-    [_log, _competitor_str, _total_cost] = competitor_openai(key, txt_lines)
+        [_log, _competitor_str, _total_cost] = competitor_openai(key, txt_lines)
     return [_competitor_str]
 
-
-def run_sentiment_llm(key, file):
+def run_llm_competitor(key, file):
     if key and file:
-        return sentiment_llm(key, file.name, 10)
-    elif not file and key:
-        return ["ERROR: Please upload a TXT file first!", "", ""]
-    elif not key and file:
-        return ["ERROR: Please input your OpenAI API Key first!", "", ""]
-    else:
-        return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!", "", ""]
-
-
-def run_7P_llm(key, file):
-    if key and file:
-        return P7_llm(key, file.name)
-    elif not file and key:
-        return ["ERROR: Please upload a TXT file first!", "", ""]
-    elif not key and file:
-        return ["ERROR: Please input your OpenAI API Key first!", "", ""]
-    else:
-        return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!", "", ""]
-
-
-def run_competitor_llm(key, file):
-    if key and file:
-        return competitor_llm(key, file.name)
+        return llm_competitor(key, file.name)
     elif not file and key:
         return ["ERROR: Please upload a TXT file first!", "", ""]
     elif not key and file:
@@ -128,8 +128,8 @@ def run_competitor_llm(key, file):
 
 
 
-with gr.Blocks(title = "Customer Sentiment Analysis by LLM") as demo:
-    gr.Markdown("## Customer Sentiment Analysis by LLM")
+with gr.Blocks(title = "Customer Sentiment Plus Analysis by LLM") as demo:
+    gr.Markdown("## Customer Sentiment Plus Analysis by LLM")
     with gr.Tab(label = "Run Process"):
         with gr.Row():
             openai_api_key = gr.Textbox(label="OpenAI API Key", placeholder="sk-**********", lines=1)
@@ -151,15 +151,15 @@ with gr.Blocks(title = "Customer Sentiment Analysis by LLM") as demo:
                 output_sentences = gr.Textbox(label="Sentences", placeholder="Sentences", lines=10, interactive=False)
             with gr.Column():
                 output_sentiments = gr.Textbox(label="Sentiments", placeholder="Sentiments", lines=10, interactive=False)
-            start_btn.click(run_sentiment_llm, inputs=[openai_api_key, upload_box], outputs=[output_log, output_sentences, output_sentiments])
+            start_btn.click(run_llm_sentiment, inputs=[openai_api_key, upload_box], outputs=[output_log, output_sentences, output_sentiments])
             output_sentiments.change(show_sentiment_file, inputs=[output_sentiments], outputs=[download_box])
             with gr.Column():
                 output_7P = gr.Textbox(label="7P Marketing", placeholder="7P Marketing", lines=10, interactive=False)
-            start_btn.click(run_7P_llm, inputs=[openai_api_key, upload_box], outputs=[output_7P])
+            start_btn.click(run_llm_7P, inputs=[openai_api_key, upload_box], outputs=[output_7P])
             output_7P.change(show_7P_file, inputs=[output_7P], outputs=[download_box])
             with gr.Column():
                 output_competitor = gr.Textbox(label="Competitor", placeholder="Competitor", lines=10, interactive=False)
-            start_btn.click(run_competitor_llm, inputs=[openai_api_key, upload_box], outputs=[output_competitor])
+            start_btn.click(run_llm_competitor, inputs=[openai_api_key, upload_box], outputs=[output_competitor])
             output_competitor.change(show_competitor_file, inputs=[output_competitor], outputs=[download_box])
 
 
@@ -174,13 +174,6 @@ def index():
 
 app = gr.mount_gradio_app(app, demo, path="/ui")
 
-def api_sentiment_llm(key, txt, N_batch):
-    _log = ""
-    _sentences_str = ""
-    _sentiments_str = ""
-    txt_lines = txt.split("\n")
-    [_log, _sentences_str, _sentiments_str] = sentiment_openai(key, txt_lines, N_batch)
-    return [_log, _sentences_str, _sentiments_str]
 
 @app.post("/api/v1/sentiment/")
 async def sentiment_analysis_api(txt: str):
@@ -189,8 +182,10 @@ async def sentiment_analysis_api(txt: str):
     _log = ""
     _sentences_str = ""
     _sentiments_str = ""
-    [_log, _sentences_str, _sentiments_str] = api_sentiment_llm(key, txt, N_batch)
-    res = {"log": _log, "sentences": _sentences_str, "sentiments": _sentiments_str}
+    _total_cost = 0
+    txt_lines = txt.split("\n")
+    [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, txt_lines, N_batch)
+    res = {"log": _log, "sentences": _sentences_str, "sentiments": _sentiments_str, "cost": _total_cost}
     json_str = json.dumps(res, indent=4, default=str)
     return Response(content=json_str, media_type='application/json')
 

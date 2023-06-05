@@ -24,7 +24,7 @@ def show_generated_file(text):
         return gr.update(value=output_sentiments_file)
 
 
-def sentiment_llm(key, file_name, N_batch):
+def llm_sentiment(key, file_name, N_batch):
     import os
     _log = ""
     _sentences_str = ""
@@ -46,9 +46,9 @@ def sentiment_llm(key, file_name, N_batch):
             _log += f"Write file: {output_sentiments_file}" + "\n"
     return [_log, _sentences_str, _sentiments_str]
 
-def run_sentiment_llm(key, file):
+def run_llm_sentiment(key, file):
     if key and file:
-        return sentiment_llm(key, file.name, 10)
+        return llm_sentiment(key, file.name, 10)
     elif not file and key:
         return ["ERROR: Please upload a TXT file first!", "", ""]
     elif not key and file:
@@ -80,7 +80,7 @@ with gr.Blocks(title = "Customer Sentiment Analysis by LLM") as demo:
                 output_comments = gr.Textbox(label="Comments", placeholder="Comments", lines=10, interactive=False)
             with gr.Column():
                 output_sentiments = gr.Textbox(label="Sentiments", placeholder="Sentiments", lines=10, interactive=False)
-            start_btn.click(run_sentiment_llm, inputs=[openai_api_key, upload_box], outputs=[output_log, output_comments, output_sentiments])
+            start_btn.click(run_llm_sentiment, inputs=[openai_api_key, upload_box], outputs=[output_log, output_comments, output_sentiments])
             output_sentiments.change(show_generated_file, inputs=[output_sentiments], outputs=[download_box])
 
 
@@ -95,23 +95,18 @@ def index():
 
 app = gr.mount_gradio_app(app, demo, path="/ui")
 
-def api_sentiment_llm(key, txt, N_batch):
-    _log = ""
-    _sentences_str = ""
-    _sentiments_str = ""
-    txt_lines = txt.split("\n")
-    [_log, _sentences_str, _sentiments_str] = sentiment_openai(key, txt_lines, N_batch)
-    return [_log, _sentences_str, _sentiments_str]
 
-@app.post("/api/v1/comments/")
+@app.post("/api/v1/sentiment/")
 async def sentiment_analysis_api(txt: str):
     key = "sk-**********"
     N_batch = 10
     _log = ""
     _sentences_str = ""
     _sentiments_str = ""
-    [_log, _sentences_str, _sentiments_str] = api_sentiment_llm(key, txt, N_batch)
-    res = {"log": _log, "sentences": _sentences_str, "sentiments": _sentiments_str}
+    _total_cost = 0
+    txt_lines = txt.split("\n")
+    [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, txt_lines, N_batch)
+    res = {"log": _log, "sentences": _sentences_str, "sentiments": _sentiments_str, "cost": _total_cost}
     json_str = json.dumps(res, indent=4, default=str)
     return Response(content=json_str, media_type='application/json')
 

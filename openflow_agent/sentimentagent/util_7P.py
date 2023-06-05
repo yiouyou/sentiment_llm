@@ -43,9 +43,11 @@ By using nouns, please identify parameters of the the 7P model in upper given cu
         template=template,
     )
     chain = LLMChain(llm=llm, prompt=prompt)
-    # [b_re, b_tokens, b_cost, b_log] = call_openai(chain, txt_lines)
-    # _log += b_log
-    # total_cost += b_cost
+    for i in txt_lines:
+        i_li = i.strip()
+        # [b_re, b_tokens, b_cost, b_log] = call_openai(chain, i_li)
+        # _log += b_log
+        # total_cost += b_cost
     return [_log, _7P_str, _total_cost]
 
 
