@@ -125,3 +125,13 @@ def sentiment_llm(_txt):
         else:
             print("Error: len(sentences) != len(sentiments)")
     return [_out, str(_total_cost)]
+
+
+
+if __name__ == "__main__":
+
+    _txt = """Opfølgning på målinger i de andre butikker. Obs. på at der altid er lidt mere og obs på at det er efterårsferie, hvis det har noget at sige for omsætningen. Desuden obs på, at det er meningen, det skal opbevares i længere tid.
+.med en basic og en SLIM. Den i Bones kan tages retur efter 2 måneder, den anden er købt.
+Tank leveres asap Vi borer huller og trækker rør ind i bygningen Kværnen indkøbes/faktureres og leveres ca. 1/4-15
+"""
+    sentiment_llm(_txt)
