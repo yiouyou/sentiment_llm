@@ -148,23 +148,30 @@ with gr.Blocks(title = "Customer Sentiment Plus Analysis by LLM") as demo:
             upload_box.change(chg_btn_color_if_file, inputs=[upload_box], outputs=[start_btn])
             # download_btn = gr.Button("Download Sentiments", variant="secondary")
         with gr.Row():
-            output_log = gr.Textbox(label="Logging", placeholder="Logging", lines=10, interactive=False)
-            download_box = gr.File(label="Download Sentiments", file_count="single", type="file", file_types=['.txt'], interactive=False)
+            with gr.Column():
+                output_log = gr.Textbox(label="Logging", placeholder="Logging", lines=10, interactive=False)
+            with gr.Column():
+                with gr.Row():
+                    download_sentiment = gr.File(label="Download Sentiments", file_count="single", type="file", file_types=['.txt'], interactive=False)
+                with gr.Row():
+                    download_7P = gr.File(label="Download 7Ps", file_count="single", type="file", file_types=['.txt'], interactive=False)
+                with gr.Row():
+                    download_competitor = gr.File(label="Download Competitor", file_count="single", type="file", file_types=['.txt'], interactive=False)
         with gr.Row():
             with gr.Column():
                 output_sentences = gr.Textbox(label="Sentences", placeholder="Sentences", lines=10, interactive=False)
             with gr.Column():
                 output_sentiments = gr.Textbox(label="Sentiments", placeholder="Sentiments", lines=10, interactive=False)
             start_btn.click(run_llm_sentiment, inputs=[openai_api_key, upload_box], outputs=[output_log, output_sentences, output_sentiments])
-            output_sentiments.change(show_sentiment_file, inputs=[output_sentiments], outputs=[download_box])
+            output_sentiments.change(show_sentiment_file, inputs=[output_sentiments], outputs=[download_sentiment])
             with gr.Column():
                 output_7P = gr.Textbox(label="7P Marketing", placeholder="7P Marketing", lines=10, interactive=False)
             start_btn.click(run_llm_7P, inputs=[openai_api_key, upload_box], outputs=[output_7P])
-            output_7P.change(show_7P_file, inputs=[output_7P], outputs=[download_box])
+            output_7P.change(show_7P_file, inputs=[output_7P], outputs=[download_7P])
             with gr.Column():
                 output_competitor = gr.Textbox(label="Competitor", placeholder="Competitor", lines=10, interactive=False)
             start_btn.click(run_llm_competitor, inputs=[openai_api_key, upload_box], outputs=[output_competitor])
-            output_competitor.change(show_competitor_file, inputs=[output_competitor], outputs=[download_box])
+            output_competitor.change(show_competitor_file, inputs=[output_competitor], outputs=[download_competitor])
 
 
 
