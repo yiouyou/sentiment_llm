@@ -17,7 +17,7 @@ _txt = options.input
 N_batch = 20
 
 
-if os.path.exists(_txt):
+if _txt:
     _log = ""
     _sentences_str = ""
     _sentiments_str = ""
