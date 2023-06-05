@@ -68,6 +68,7 @@ def llm_7P(key, file_name):
     _log = ""
     _7P_str = ""
     _total_cost = 0
+    print(f"file_name: {file_name}")
     if os.path.exists(file_name):
         left, right = os.path.splitext(os.path.basename(file_name))
         global output_sentiments_file
@@ -102,6 +103,7 @@ def llm_competitor(key, file_name):
     _log = ""
     _competitor_str = ""
     _total_cost = 0
+    print(f"file_name: {file_name}")
     if os.path.exists(file_name):
         left, right = os.path.splitext(os.path.basename(file_name))
         global output_sentiments_file
@@ -149,7 +151,7 @@ with gr.Blocks(title = "Customer Sentiment Plus Analysis by LLM") as demo:
             # download_btn = gr.Button("Download Sentiments", variant="secondary")
         with gr.Row():
             with gr.Column():
-                output_log = gr.Textbox(label="Logging", placeholder="Logging", lines=10, interactive=False)
+                output_log = gr.Textbox(label="Logging", placeholder="Logging", lines=12, interactive=False)
             with gr.Column():
                 with gr.Row():
                     download_sentiment = gr.File(label="Download Sentiments", file_count="single", type="file", file_types=['.txt'], interactive=False)
