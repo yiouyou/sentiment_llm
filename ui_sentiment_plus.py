@@ -59,7 +59,7 @@ def run_llm_sentiment(key, file):
 def show_sentiment_file(text):
     # print(f"text: {text}")
     if text:
-        return gr.update(value=output_sentiments_file)
+        return gr.update(value=output_sentiments_file, visible=True)
     else:
         return gr.update(value=output_sentiments_file)
 
@@ -94,7 +94,7 @@ def run_llm_7P(key, file):
 def show_7P_file(text):
     # print(f"text: {text}")
     if text:
-        return gr.update(value=output_7P_file)
+        return gr.update(value=output_7P_file, visible=True)
     else:
         return gr.update(value=output_7P_file)
 
@@ -129,7 +129,7 @@ def run_llm_competitor(key, file):
 def show_competitor_file(text):
     # print(f"text: {text}")
     if text:
-        return gr.update(value=output_competitor_file)
+        return gr.update(value=output_competitor_file, visible=True)
     else:
         return gr.update(value=output_competitor_file)
 
@@ -155,13 +155,11 @@ with gr.Blocks(title = "Customer Sentiment Plus Analysis by LLM") as demo:
                 output_log = gr.Textbox(label="Logging", placeholder="Logging", lines=12, interactive=False)
             with gr.Column():
                 with gr.Row():
-                    download_sentiment = gr.File(label="Download Sentiments", file_count="single", type="file", file_types=['.txt'], interactive=False)
+                    download_sentiment = gr.File(label="Download Sentiments", file_count="single", type="file", file_types=['.txt'], interactive=False, visible=False)
                 with gr.Row():
-                    download_7P = gr.File(label="Download 7Ps", file_count="single", type="file", file_types=['.txt'], interactive=False)
+                    download_7P = gr.File(label="Download 7Ps", file_count="single", type="file", file_types=['.txt'], interactive=False, visible=False)
                 with gr.Row():
-                    download_competitor = gr.File(label="Download Competitor", file_count="single", type="file", file_types=['.txt'], interactive=False)
-                with gr.Row():
-                    download_box = gr.File(label="Download", file_count="single", type="file", file_types=['.txt'], interactive=False)
+                    download_competitor = gr.File(label="Download Competitor", file_count="single", type="file", file_types=['.txt'], interactive=False, visible=False)
         with gr.Row():
             with gr.Column():
                 output_sentences = gr.Textbox(label="Sentences", placeholder="Sentences", lines=10, interactive=False)
@@ -169,17 +167,14 @@ with gr.Blocks(title = "Customer Sentiment Plus Analysis by LLM") as demo:
                 output_sentiments = gr.Textbox(label="Sentiments", placeholder="Sentiments", lines=10, interactive=False)
             start_btn.click(run_llm_sentiment, inputs=[openai_api_key, upload_box], outputs=[output_log, output_sentences, output_sentiments])
             output_sentiments.change(show_sentiment_file, inputs=[output_sentiments], outputs=[download_sentiment])
-            output_sentiments.change(show_sentiment_file, inputs=[output_sentiments], outputs=[download_box])
             with gr.Column():
                 output_7P = gr.Textbox(label="7P Marketing", placeholder="7P Marketing", lines=10, interactive=False)
             start_btn.click(run_llm_7P, inputs=[openai_api_key, upload_box], outputs=[output_7P])
             output_7P.change(show_7P_file, inputs=[output_7P], outputs=[download_7P])
-            output_7P.change(show_7P_file, inputs=[output_7P], outputs=[download_box])
             with gr.Column():
                 output_competitor = gr.Textbox(label="Competitor", placeholder="Competitor", lines=10, interactive=False)
             start_btn.click(run_llm_competitor, inputs=[openai_api_key, upload_box], outputs=[output_competitor])
             output_competitor.change(show_competitor_file, inputs=[output_competitor], outputs=[download_competitor])
-            output_competitor.change(show_competitor_file, inputs=[output_competitor], outputs=[download_box])
 
 
 
