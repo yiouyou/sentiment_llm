@@ -1,21 +1,27 @@
 import os
 import openiap, asyncio
 from openiap import Client
-from util import sentiment_llm
+from util_sentiment import sentiment_llm
+from util_competitor import competitor_llm
+from util_7P import P7_llm
 
 
 async def __wait_for_message(cli: Client, message, payload):
     print(payload)
     _sentiment = ""
-    _cost = ""
     _7p = ""
     _competitor = ""
-    # [_sentiment, _cost, _7p, _competitor] = sentiment_llm(payload["text"])
-    [_sentiment, _cost] = sentiment_llm(payload["text"])
+    _cost_sentiment = ""
+    _cost_competitor = ""
+    _cost_7p = ""
+    _total_cost = str(float(_cost_sentiment) + float(_cost_competitor) + float(_cost_7p))
+    [_sentiment, _cost_sentiment] = sentiment_llm(payload["text"])
+    [_competitor, _cost_competitor] = competitor_llm(payload["text"])
+    [_7p, _cost_7p] = P7_llm(payload["text"])
     payload["sentiment"] = _sentiment
-    payload["parameters"] = _cost
-    payload["noun"] = _7p
     payload["pronouns"] = _competitor
+    payload["noun"] = _7p
+    payload["parameters"] = f"${_total_cost}=(${_cost_sentiment}+${_cost_competitor}+${_cost_7p})"
     return payload
 
 
