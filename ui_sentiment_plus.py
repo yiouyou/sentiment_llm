@@ -63,7 +63,7 @@ def llm_sentiment(key, file_name, N_batch):
                 for i in range(0, len(sentences)):
                     i_re= f"{sentences[i]}|{sentiments[i]}\n"
                     wf.write(i_re)
-                _log += f"Write file: {output_sentiments_file}" + "\n"
+            _log += f"Write file: {output_sentiments_file}" + "\n"
     return [_log, _sentences_str, _sentiments_str]
 
 def run_llm_sentiment(key, file):

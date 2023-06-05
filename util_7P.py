@@ -55,6 +55,7 @@ def P7_llm(_txt):
     _log = ""
     _7P_str = ""
     _total_cost = 0
-    [_log, _7P_str, _total_cost] = P7_openai(key, _txt)
+    txt_lines = _txt.split("\n")
+    [_log, _7P_str, _total_cost] = P7_openai(key, txt_lines)
     print(_log)
     return [_7P_str, str(_total_cost)]

@@ -1,5 +1,5 @@
 # coding=utf-8
-# python run_file_1by1.py -openaikey sk-*** -input job_test.txt
+# python run_file_1by1.py -openaikey sk-*** -input test_notes.txt
 import os
 import sys
 import argparse

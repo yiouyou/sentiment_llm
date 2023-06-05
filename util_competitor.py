@@ -51,10 +51,11 @@ By using nouns, please identify parameters of the the 7P model in upper given cu
     return [_log, _competitor_str, _total_cost]
 
 
-def competitor_7P_llm(_txt):
+def competitor_llm(_txt):
     _log = ""
     _competitor_str = ""
     _total_cost = 0
-    [_log, _competitor_str, _total_cost] = competitor_openai(key, _txt)
+    txt_lines = _txt.split("\n")
+    [_log, _competitor_str, _total_cost] = competitor_openai(key, txt_lines)
     print(_log)
     return [_competitor_str, str(_total_cost)]

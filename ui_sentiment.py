@@ -29,20 +29,21 @@ def llm_sentiment(key, file_name, N_batch):
     _log = ""
     _sentences_str = ""
     _sentiments_str = ""
+    _total_cost = 0
     if os.path.exists(file_name):
         left, right = os.path.splitext(os.path.basename(file_name))
         global output_sentiments_file
         output_sentiments_file = f"{left}_sentiments.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-    [_log, _sentences_str, _sentiments_str] = sentiment_openai(key, txt_lines, N_batch)
-    if _sentences_str != "" and _sentiments_str != "":
-        sentences = _sentences_str.split("\n")
-        sentiments = _sentiments_str.split("\n")
-        with open(output_sentiments_file, "w", encoding='utf-8') as wf:
-            for i in range(0, len(sentences)):
-                i_re= f"{sentences[i]}|{sentiments[i]}\n"
-                wf.write(i_re)
+        [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, txt_lines, N_batch)
+        if _sentences_str != "" and _sentiments_str != "":
+            sentences = _sentences_str.split("\n")
+            sentiments = _sentiments_str.split("\n")
+            with open(output_sentiments_file, "w", encoding='utf-8') as wf:
+                for i in range(0, len(sentences)):
+                    i_re= f"{sentences[i]}|{sentiments[i]}\n"
+                    wf.write(i_re)
             _log += f"Write file: {output_sentiments_file}" + "\n"
     return [_log, _sentences_str, _sentiments_str]
 

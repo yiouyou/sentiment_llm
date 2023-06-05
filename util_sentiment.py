@@ -110,7 +110,8 @@ def sentiment_llm(_txt):
     _sentences_str = ""
     _sentiments_str = ""
     _total_cost = 0
-    [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, _txt, N_batch)
+    txt_lines = _txt.split("\n")
+    [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, txt_lines, N_batch)
     print(_log)
     _out = ""
     if _sentences_str != "" and _sentiments_str != "":

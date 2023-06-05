@@ -1,121 +1,46 @@
 # coding=utf-8
 # python run_1note.py -openaikey sk-*** -input "Ved ikke om de har noget organisk affald... på deres hovedkontor har de et køkken, men det er en ekstern operatør der driver det... det er Michael Kjær fra driften, et fælles køkken med andre virksomheder.. Ring til ham om det. NCC bestemmer desuden selv om de skal have vores projekt med i loopet på dgnb point i byggeriet... i deres koncept udvikling...; De er ved at definere det og vi kan vende retur til Martin i Januar, hvor han ved hvem vi skal have møde med om det."
 import os
-import re
-import sys
 import argparse
 import pprint as pp
-from langchain import OpenAI, PromptTemplate, LLMChain
-from langchain.callbacks import get_openai_callback
+from util_sentiment import sentiment_openai
+from util_competitor import competitor_openai
+from util_7P import P7_openai
 
 
 parser = argparse.ArgumentParser(description='', formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument('-openaikey', action='store', help='openai_api_key', type=str, default="")
 parser.add_argument('-input', action='store', help='input text string', type=str, default="")
 options = parser.parse_args()
-os.environ["OPENAI_API_KEY"] = options.openaikey
+key = options.openaikey
 _txt = options.input
 N_batch = 20
 
 
-llm = OpenAI(temperature=0)
-template = """
-Ignore previous instructions. You are a sentiment analyst of customer comments. You assist the company in further operations by dividing customer comments into three categories: positive, negative and neutral. The main purpose is to judge whether customers have a positive attitude towards the products we are trying to sell to them. When analyzing comments, in addition to the general sentiment analysis principles, the following rules must be followed:
-1) If the customer is likely to agree to our call back, it is considered positive
-2) If the customer is willing to communicate further or is likely to purchase in the future, it is considered positive
-3) If the main content of the comment involves numbers, phone numbers, dates, addresses or web addresses, it is considered neutral
-4) If the main content of the comment is dominated by interjections, modal particles, nouns or adjectives with no obvious emotional meaning, it is considered neutral
+if os.path.exists(_txt):
+    _log = ""
+    _sentences_str = ""
+    _sentiments_str = ""
+    _total_cost = 0
+    [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, [_txt], N_batch)
+    print(f"_log:\n{_log}\n")
+    print(f"_sentences_str:\n{_sentences_str}\n")
+    print(f"_sentiments_str:\n{_sentiments_str}\n")
+    print(f"_total_cost:\n{_total_cost}\n")
 
-Below are some examples of sentiment analysis for some customer comments in csv format, where the customer's comments are enclosed in double quotes, and after the comma is the sentiment classification of the comments:
-{_example}
+    _log = ""
+    _competitor_str = ""
+    _total_cost = 0
+    [_log, _competitor_str, _total_cost] = competitor_openai(key, [_txt], N_batch)
+    print(f"_log:\n{_log}\n")
+    print(f"_sentences_str:\n{_competitor_str}\n")
+    print(f"_total_cost:\n{_total_cost}\n")
 
-The customer comment texts that require sentiment analysis are as follows:
-{_content}
-
-For each comment, there is no need to output the comment itself, just output the comment index, sentiment classification and short classification reason in the format of "index) classification(reason)", and output the analysis results in English lowercase.
-
-In addition, please identify parameters of the 7P model in upper given customer note and their related segments, and output in json format in which each 7P should be the MAIN key (please make sure that if there is no related segment, DO NOT show the 7P).
-"""
-prompt = PromptTemplate(
-    input_variables=["_content", "_example"],
-    template=template,
-)
-chain = LLMChain(llm=llm, prompt=prompt)
-
-
-def call_openai(_content, _example):
-    _re = ""
-    _tokens = 0
-    _cost = 0
-    with get_openai_callback() as cb:
-        _re = chain.run(_content=_content, _example=_example)
-        _tokens = cb.total_tokens
-        _cost = cb.total_cost
-        print(f"Tokens: {cb.total_tokens} = (Prompt {cb.prompt_tokens} + Completion {cb.completion_tokens})")
-        print(f"Cost: ${cb.total_cost}\n")
-    # print(_re)
-    return (_re, _tokens, _cost)
-
-
-with open("openai_prompt.examples", "r", encoding="utf8") as ef:
-    _example = "".join(ef.readlines())
-# print(_example)
-
-
-def main(_txt):
-    all_re = ""
-    total_cost = 0
-
-    sentences = []
-    _txt = _txt.strip()
-    for j in _txt.split(". "):
-        jj = ""
-        if j[-1] == '.':
-            jj = j
-        else:
-            jj = j+"."
-        sentences.append(jj)
-    # print(len(sentences))
-    # pp.pprint(sentences)
-
-    print("-" * 40)
-    for i in range(0, len(sentences)):
-        if i % N_batch == 0:
-            batch = sentences[i:i+N_batch]
-            # print(batch)
-            _content = ""
-            n = int(i / N_batch)
-            for j in range(0, len(batch)):
-                _content = _content + f"{n*N_batch +j +1}) {batch[j]}\n"
-            print(_content)
-            (b_re, b_tokens, b_cost) = call_openai(_content, _example)
-            total_cost += b_cost
-            all_re += b_re + "\n"
-    all_re = re.sub(r" *\(", " (", all_re.lower())
-    all_re = re.sub(r"\n+", "\n", all_re)
-    print("-" * 40)
-    print(all_re)
-    print(total_cost)
-
-    _sentiments = all_re.split("\n")
-    sentiments = []
-    for i in _sentiments:
-        if i != "":
-            sentiments.append(i)
-    # print(sentiments)
-
-    _out = ""
-    if len(sentences) == len(sentiments):
-        for i in range(0, len(sentences)):
-            i_re= f"{i+1}) \"{sentences[i]}\"|{sentiments[i]}\n"
-            # print(i_re)
-            _out += i_re
-    else:
-        print("Error: len(sentences) != len(sentiments)")
-
-    return _out
-
-if _txt:
-    output = main(_txt)
-    print(output)
+    _log = ""
+    _7P_str = ""
+    _total_cost = 0
+    [_log, _7P_str, _total_cost] = P7_openai(key, [_txt], N_batch)
+    print(f"_log:\n{_log}\n")
+    print(f"_7P_str:\n{_7P_str}\n")
+    print(f"_total_cost:\n{_total_cost}\n")
 
