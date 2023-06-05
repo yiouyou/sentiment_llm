@@ -52,7 +52,7 @@ By using nouns, please identify parameters of the the 7P model in upper given cu
 def P7_llm(_txt):
     _log = ""
     _7P_str = ""
-    _total_cost = ""
+    _total_cost = 0
     [_log, _7P_str, _total_cost] = P7_openai(key, _txt)
     print(_log)
-    return [_7P_str, _total_cost]
+    return [_7P_str, str(_total_cost)]

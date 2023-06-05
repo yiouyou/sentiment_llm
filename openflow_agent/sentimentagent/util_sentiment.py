@@ -28,6 +28,7 @@ def sentiment_openai(key, txt_lines, N_batch):
     _log = ""
     _sentences_str = ""
     _sentiments_str = ""
+    _total_cost = 0
     ##### set OpenAI API Key and prompt
     os.environ["OPENAI_API_KEY"] = key
     llm = OpenAI(temperature=0)
@@ -68,7 +69,6 @@ For each comment, there is no need to output the comment itself, just output the
     ##### call OpenAI API with _content and _example
     _log += "-" * 40 + "\n"
     all_re = ""
-    total_cost = 0
     for i in range(0, len(_sentences)):
         if i % N_batch == 0:
             batch = _sentences[i:i+N_batch]
@@ -80,7 +80,7 @@ For each comment, there is no need to output the comment itself, just output the
             _log += _content
             [b_re, b_tokens, b_cost, b_log] = call_openai(chain, _content, _example)
             _log += b_log
-            total_cost += b_cost
+            _total_cost += b_cost
             all_re += b_re + "\n"
     ##### parse response, generate _log, _sentences_str and _sentiments_str
     sentences = []
@@ -94,7 +94,7 @@ For each comment, there is no need to output the comment itself, just output the
     _log += "-" * 40 + "\n"
     _log += "\n".join(sentiments) + "\n"
     _log += "-" * 40 + "\n"
-    _log += f"\nTotal Cost: ${str(total_cost)}\n"
+    _log += f"\nTotal Cost: ${str(_total_cost)}\n"
     if len(_sentences) == len(sentiments):
         for i in range(0, len(_sentences)):
             sentences.append(f"{i+1}) \"{_sentences[i]}\"")
@@ -102,11 +102,15 @@ For each comment, there is no need to output the comment itself, just output the
         _sentiments_str = "\n".join(sentiments)
     else:
         _log += "Error: len(sentences) != len(sentiments)" + "\n"
-    return [_log, _sentences_str, _sentiments_str, total_cost]
+    return [_log, _sentences_str, _sentiments_str, _total_cost]
 
 
 def sentiment_llm(_txt):
-    [_log, _sentences_str, _sentiments_str, _cost] = sentiment_openai(key, _txt, N_batch)
+    _log = ""
+    _sentences_str = ""
+    _sentiments_str = ""
+    _total_cost = 0
+    [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, _txt, N_batch)
     print(_log)
     _out = ""
     if _sentences_str != "" and _sentiments_str != "":
@@ -119,4 +123,4 @@ def sentiment_llm(_txt):
             print(f"return:\n{_out}")
         else:
             print("Error: len(sentences) != len(sentiments)")
-    return [_out, _cost]
+    return [_out, str(_total_cost)]
