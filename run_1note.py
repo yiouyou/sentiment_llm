@@ -31,7 +31,7 @@ if _txt:
     _log = ""
     _competitor_str = ""
     _total_cost = 0
-    [_log, _competitor_str, _total_cost] = competitor_openai(key, [_txt], N_batch)
+    [_log, _competitor_str, _total_cost] = competitor_openai(key, [_txt])
     print(f"_log:\n{_log}\n")
     print(f"_sentences_str:\n{_competitor_str}\n")
     print(f"_total_cost:\n{_total_cost}\n")
@@ -39,7 +39,7 @@ if _txt:
     _log = ""
     _7P_str = ""
     _total_cost = 0
-    [_log, _7P_str, _total_cost] = P7_openai(key, [_txt], N_batch)
+    [_log, _7P_str, _total_cost] = P7_openai(key, [_txt])
     print(f"_log:\n{_log}\n")
     print(f"_7P_str:\n{_7P_str}\n")
     print(f"_total_cost:\n{_total_cost}\n")
