@@ -14,6 +14,7 @@ async def __wait_for_message(cli: Client, message, payload):
     _cost_sentiment = ""
     _cost_competitor = ""
     _cost_7p = ""
+    _total_cost = ""
     [_sentiment, _cost_sentiment] = sentiment_llm(payload["text"])
     [_competitor, _cost_competitor] = competitor_llm(payload["text"])
     [_7p, _cost_7p] = P7_llm(payload["text"])
