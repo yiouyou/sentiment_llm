@@ -31,12 +31,12 @@ def competitor_openai(key, txt_lines):
     os.environ["OPENAI_API_KEY"] = key
     llm = OpenAI(temperature=0)
     template = """
-Ignore previous instructions. 
+Ignore previous instructions. As a business competitor analyst, your task is to identify and extract the names and brands of competitors from client notes.
 
-The customer comment texts that require sentiment analysis are as follows:
+The client's note text that requires business competitor analysis is provided below:
 {_content}
 
-By using nouns, please identify parameters of the the 7P model in upper given customer note, and output in json format in wich in which each 7P should be the MAIN key.
+You should output the results in JSON format, with the 'competitors' the main key and the identified competitors as the values. Please output the analysis results in English lowercase:
 """
     prompt = PromptTemplate(
         input_variables=["_content"],

@@ -31,12 +31,12 @@ def P7_openai(key, txt_lines):
     os.environ["OPENAI_API_KEY"] = key
     llm = OpenAI(temperature=0)
     template = """
-Ignore previous instructions. 
+Ignore previous instructions. As a marketing strategy analyst, your task is to identify and extract the 7Ps from customer notes using nouns, according to the 7Ps Marketing Mix.
 
-The customer comment texts that require sentiment analysis are as follows:
+The customer notes text that requires marketing strategy analysis is provided below:
 {_content}
 
-By using nouns, please identify parameters of the the 7P model in upper given customer note, and output in json format in wich in which each 7P should be the MAIN key.
+You should output the results in JSON format, with the 7Ps as the main key and the corresponding nouns as the values, ordered as: Product, Promotion, Price, Place, People, Process, Physical evidence. If no information is available for a certain key, set its value as an empty string. Please output the analysis results in English lowercase:
 """
     prompt = PromptTemplate(
         input_variables=["_content"],
