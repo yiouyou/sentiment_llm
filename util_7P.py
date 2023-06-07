@@ -53,6 +53,7 @@ You should output the results in JSON format, with the 7Ps as the main key and t
 
 
 def P7_llm(_txt):
+    global key
     _log = ""
     _7P_str = ""
     _total_cost = 0

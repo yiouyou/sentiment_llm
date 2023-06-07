@@ -106,6 +106,7 @@ For each comment, there is no need to output the comment itself, just output the
 
 
 def sentiment_llm(_txt):
+    global key
     _log = ""
     _sentences_str = ""
     _sentiments_str = ""
@@ -134,4 +135,4 @@ if __name__ == "__main__":
 .med en basic og en SLIM. Den i Bones kan tages retur efter 2 måneder, den anden er købt.
 Tank leveres asap Vi borer huller og trækker rør ind i bygningen Kværnen indkøbes/faktureres og leveres ca. 1/4-15
 """
-    sentiment_llm(_txt)
+    print(sentiment_llm(_txt))

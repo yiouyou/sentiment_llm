@@ -53,6 +53,7 @@ You should output the results in JSON format, with the 'competitors' the main ke
 
 
 def competitor_llm(_txt):
+    global key
     _log = ""
     _competitor_str = ""
     _total_cost = 0
