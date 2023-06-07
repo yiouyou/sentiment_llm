@@ -66,6 +66,7 @@ def show_sentiment_file(text):
 
 def llm_7P(key, file_name):
     import os
+    import re
     _log = ""
     _7P_str = ""
     _total_cost = 0
@@ -77,9 +78,10 @@ def llm_7P(key, file_name):
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
         [_log, _7P_str, _total_cost] = P7_openai(key, txt_lines)
+    _7P_str = re.sub(r"\n+", r"\n", _7P_str)
     with open(output_7P_file, "w", encoding='utf-8') as wf:
         wf.write(_7P_str)
-    return [_7P_str]
+    return _7P_str
 
 def run_llm_7P(key, file):
     if key and file:
@@ -101,6 +103,7 @@ def show_7P_file(text):
 
 def llm_competitor(key, file_name):
     import os
+    import re
     _log = ""
     _competitor_str = ""
     _total_cost = 0
@@ -112,9 +115,10 @@ def llm_competitor(key, file_name):
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
         [_log, _competitor_str, _total_cost] = competitor_openai(key, txt_lines)
+    _competitor_str = re.sub(r"\n+", r"\n", _competitor_str)
     with open(output_competitor_file, "w", encoding='utf-8') as wf:
         wf.write(_competitor_str)
-    return [_competitor_str]
+    return _competitor_str
 
 def run_llm_competitor(key, file):
     if key and file:

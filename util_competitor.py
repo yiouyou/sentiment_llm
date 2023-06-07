@@ -47,7 +47,7 @@ You should output the results in JSON format, with the 'competitors' the main ke
         i_li = i.strip()
         [b_re, b_tokens, b_cost, b_log] = call_openai(chain, i_li)
         _log += b_log
-        _competitor_str += b_re
+        _competitor_str += re.sub(r"\n+", r"\n", b_re) + "\n"
         _total_cost += b_cost
     return [_log, _competitor_str, _total_cost]
 
