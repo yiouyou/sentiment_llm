@@ -14,13 +14,13 @@ async def __wait_for_message(cli: Client, message, payload):
     _cost_sentiment = ""
     _cost_competitor = ""
     _cost_7p = ""
-    _total_cost = str(float(_cost_sentiment) + float(_cost_competitor) + float(_cost_7p))
     [_sentiment, _cost_sentiment] = sentiment_llm(payload["text"])
     [_competitor, _cost_competitor] = competitor_llm(payload["text"])
     [_7p, _cost_7p] = P7_llm(payload["text"])
     payload["sentiment"] = _sentiment
     payload["pronouns"] = _competitor
     payload["noun"] = _7p
+    _total_cost = str(float(_cost_sentiment) + float(_cost_competitor) + float(_cost_7p))
     payload["parameters"] = f"${_total_cost}=(${_cost_sentiment}+${_cost_competitor}+${_cost_7p})"
     return payload
 
