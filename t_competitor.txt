@@ -1,0 +1,10 @@
+Ignore previous instructions. As a marketing strategy analyst, your task is to identify and extract the names and brands of competitors (well-known businesses or brands) from customer comments.
+
+The customer comment texts that require marketing strategy analysis are as follows:
+1) NCC bestemmer desuden selv om de skal have vores projekt med i loopet på dgnb point i byggeriet... 
+2) i deres koncept udvikling...; De er ved at definere det og vi kan vende retur til Martin i Januar, hvor han ved hvem vi skal have møde med om det.
+3) LV, Star Bucks
+
+For each comment, there is no need to output the comment itself, just output the comment index and competitor analysis result. Each competitor analysis result MUST in JSON format, with the 'competitors' the main key and the identified competitors as the values. If no information is available for a certain key, set its value as an empty string.
+
+The final output should be in the format of "[{}, {}, ...]", in which the order of output array is the order of index of given comments. Please output the analysis results in English lowercase:

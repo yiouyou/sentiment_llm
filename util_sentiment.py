@@ -2,7 +2,7 @@ import pprint as pp
 
 
 key = "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"
-N_batch = 20
+N_batch = 5
 
 
 def call_openai(chain, _content, _example):

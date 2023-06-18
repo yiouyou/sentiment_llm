@@ -2,6 +2,7 @@ import pprint as pp
 
 
 key = "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"
+N_batch = 5
 
 
 def call_openai(chain, _content):
@@ -20,7 +21,7 @@ def call_openai(chain, _content):
     return [_re, _tokens, _cost, _log]
 
 
-def competitor_openai(key, txt_lines):
+def competitor_openai(key, txt_lines, N_batch):
     import os
     import re
     from langchain import OpenAI, PromptTemplate, LLMChain
@@ -31,24 +32,55 @@ def competitor_openai(key, txt_lines):
     os.environ["OPENAI_API_KEY"] = key
     llm = OpenAI(temperature=0)
     template = """
-Ignore previous instructions. As a business competitor analyst, your task is to identify and extract the names and brands of competitors (well-known businesses or brands) from customer notes.
+Ignore previous instructions. As a business competitor analyst, your task is to identify and extract the names and brands of competitors (well-known businesses or brands) from customer comments.
 
-The customer's note text that requires business competitor analysis is provided below:
+The customer comment texts that require marketing strategy analysis are as follows:
 {_content}
 
-You should output the results in JSON format, with the 'competitors' the main key and the identified competitors as the values. Please output the analysis results in English lowercase:
+For each comment, there is no need to output the comment itself, just output the comment index and competitor analysis result. Each competitor analysis result MUST in JSON format, with the 'competitors' the main key and the identified competitors as the values. If no information is available for a certain key, set its value as an empty string.
+
+The final output should be in the format of "[{}, {}, ...]", in which the order of output array is the order of index of given comments. Please output the analysis results in English lowercase:
+
 """
     prompt = PromptTemplate(
         input_variables=["_content"],
         template=template,
     )
     chain = LLMChain(llm=llm, prompt=prompt)
-    _txt_lines = "\n".join(txt_lines)
-    _li = _txt_lines.strip()
-    [b_re, b_tokens, b_cost, b_log] = call_openai(chain, _li)
-    _log += b_log
-    _competitor_str += re.sub(r"\n+", r"\n", b_re) + "\n"
-    _total_cost += b_cost
+    ##### split comment to sentences
+    _sentences = []
+    for i in txt_lines:
+        i_li = i.strip()
+        if i_li:
+            for j in i_li.split(". "):
+                jj = ""
+                if j[-1] == '.':
+                    jj = j
+                else:
+                    jj = j+"."
+                _sentences.append(jj)
+    ##### call OpenAI API with _content
+    all_re = ""
+    for i in range(0, len(_sentences)):
+        if i % N_batch == 0:
+            batch = _sentences[i:i+N_batch]
+            # print(batch)
+            _content = ""
+            n = int(i / N_batch)
+            for j in range(0, len(batch)):
+                _content = _content + f"{n*N_batch +j +1}) {batch[j]}\n"
+            _log += _content
+            [b_re, b_tokens, b_cost, b_log] = call_openai(chain, _content)
+            _log += b_log
+            _total_cost += b_cost
+            all_re += b_re + "\n"
+    _competitor_str = all_re
+    # _txt_lines = "\n".join(txt_lines)
+    # _li = _txt_lines.strip()
+    # [b_re, b_tokens, b_cost, b_log] = call_openai(chain, _li)
+    # _log += b_log
+    # _competitor_str += re.sub(r"\n+", r"\n", b_re) + "\n"
+    # _total_cost += b_cost
     return [_log, _competitor_str, _total_cost]
 
 
@@ -58,7 +90,7 @@ def competitor_llm(_txt):
     _competitor_str = ""
     _total_cost = 0
     txt_lines = _txt.split("\n")
-    [_log, _competitor_str, _total_cost] = competitor_openai(key, txt_lines)
+    [_log, _competitor_str, _total_cost] = competitor_openai(key, txt_lines, N_batch)
     print(_log)
     return [_competitor_str, str(_total_cost)]
 
