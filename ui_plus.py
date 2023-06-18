@@ -48,7 +48,7 @@ def llm_sentiment(key, file_name, N_batch):
 
 def run_llm_sentiment(key, file):
     if key and file:
-        return llm_sentiment(key, file.name, 5)
+        return llm_sentiment(key, file.name, 10)
     elif not file and key:
         return ["ERROR: Please upload a TXT file first!", "", ""]
     elif not key and file:
@@ -85,7 +85,7 @@ def llm_7P(key, file_name, N_batch):
 
 def run_llm_7P(key, file):
     if key and file:
-        return llm_7P(key, file.name, 5)
+        return llm_7P(key, file.name, 10)
     elif not file and key:
         return ["ERROR: Please upload a TXT file first!", "", ""]
     elif not key and file:
@@ -122,7 +122,7 @@ def llm_competitor(key, file_name, N_batch):
 
 def run_llm_competitor(key, file):
     if key and file:
-        return llm_competitor(key, file.name, 5)
+        return llm_competitor(key, file.name, 10)
     elif not file and key:
         return ["ERROR: Please upload a TXT file first!", "", ""]
     elif not key and file:

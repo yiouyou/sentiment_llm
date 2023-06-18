@@ -5,14 +5,14 @@ key = "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"
 N_batch = 5
 
 
-def call_openai(chain, _content):
+def call_openai(chain, _content, _empty):
     from langchain.callbacks import get_openai_callback
     _re = ""
     _tokens = 0
     _cost = 0
     _log = ""
     with get_openai_callback() as cb:
-        _re = chain.run(_content=_content)
+        _re = chain.run(_content=_content, _empty=_empty)
         _tokens = cb.total_tokens
         _cost = cb.total_cost
         _log += f"\nTokens: {cb.total_tokens} = (Prompt {cb.prompt_tokens} + Completion {cb.completion_tokens})\n"
@@ -32,17 +32,16 @@ def P7_openai(key, txt_lines, N_batch):
     os.environ["OPENAI_API_KEY"] = key
     llm = OpenAI(temperature=0)
     template = """
-Ignore previous instructions. As a marketing strategy analyst, your task is to identify and extract the 7Ps from customer comments using nouns, according to the 7Ps Marketing Mix.
+Ignore previous instructions. As a marketing strategy analyst, your task is to identify and extract the 7Ps from each customer comment using nouns, according to the 7Ps Marketing Mix.
 
-The customer comment texts that require marketing strategy analysis are as follows:
+The customer comments that require marketing strategy analysis are as follows:
 {_content}
 
-For each comment, there is no need to output the comment itself, just output the comment index and 7Ps analysis result. Each 7Ps analysis result MUST in JSON format, with the 7Ps as the main key and the corresponding nouns as the values, ordered as: Product, Promotion, Price, Place, People, Process, Physical evidence. If no information is available for a certain key, set its value as an empty string.
-
-The final output should be in the format of "[{}, {}, ...]", in which the order of output array is the order of index of given comments. Please output the analysis results in English lowercase:
+The output form of the final result is an array of arrays [{_empty}, {_empty},...], each element in the outermost array is the analysis result corresponding to each comment, and the order of the elements is given order of comments. The analysis result of each comment is the analysis result of 7Ps Marketing Mix in JSON format, with the 7Ps as the main key and the corresponding nouns as the values, ordered as: Product, Promotion, Price, Place, People, Process, Physical evidence. If no information is available for a certain key, do not output the key-value pair.
+Please output the analysis results in English lowercase and only the array:
 """
     prompt = PromptTemplate(
-        input_variables=["_content"],
+        input_variables=["_content", "_empty"],
         template=template,
     )
     chain = LLMChain(llm=llm, prompt=prompt)
@@ -69,17 +68,13 @@ The final output should be in the format of "[{}, {}, ...]", in which the order 
             for j in range(0, len(batch)):
                 _content = _content + f"{n*N_batch +j +1}) {batch[j]}\n"
             _log += _content
-            [b_re, b_tokens, b_cost, b_log] = call_openai(chain, _content)
+            # print(prompt.format(_content=_content, _empty=r"{}"))
+            [b_re, b_tokens, b_cost, b_log] = call_openai(chain, _content, r"{}")
             _log += b_log
             _total_cost += b_cost
             all_re += b_re + "\n"
+            # print(b_re)
     _7P_str = all_re
-    # _txt_lines = "\n".join(txt_lines)
-    # _li = _txt_lines.strip()
-    # [b_re, b_tokens, b_cost, b_log] = call_openai(chain, _li)
-    # _log += b_log
-    # _7P_str += re.sub(r"\n+", r"\n", b_re) + "\n"
-    # _total_cost += b_cost
     return [_log, _7P_str, _total_cost]
 
 
