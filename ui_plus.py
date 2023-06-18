@@ -211,7 +211,7 @@ if __name__ == "__main__":
     # demo.queue(concurrency_count=1).launch(share=True)
     demo.queue(concurrency_count=1).launch(
         server_name="0.0.0.0",
-        server_port=7788,
+        server_port=7860,
         share=False,
     )
 
