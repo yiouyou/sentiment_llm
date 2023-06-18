@@ -3,7 +3,7 @@
 import os
 import argparse
 import pprint as pp
-from util_sentiment import sentiment_openai
+from util_sentiment_index import sentiment_openai
 from util_competitor import competitor_openai
 from util_7P import P7_openai
 

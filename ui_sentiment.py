@@ -1,5 +1,5 @@
 import gradio as gr
-from util_sentiment import sentiment_openai
+from util_sentiment_index import sentiment_openai
 
 
 output_sentiments_file = "_sentiments.txt"

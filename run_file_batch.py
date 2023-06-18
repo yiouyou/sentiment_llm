@@ -3,7 +3,7 @@
 import os
 import argparse
 import pprint as pp
-from util_sentiment import sentiment_openai
+from util_sentiment_index import sentiment_openai
 
 
 parser = argparse.ArgumentParser(description='', formatter_class=argparse.RawTextHelpFormatter)

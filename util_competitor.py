@@ -74,8 +74,9 @@ Please output the analysis results in English lowercase and only the array:
             _total_cost += b_cost
             all_re += b_re + "\n"
             # print(b_re)
-    _competitor_str = all_re
-    return [_log, _competitor_str, _total_cost]
+    _total_cost_str = format(_total_cost, ".5f")
+    _competitor_str = all_re.strip()
+    return [_log, _competitor_str, _total_cost_str]
 
 
 def competitor_llm(_txt):
@@ -84,9 +85,9 @@ def competitor_llm(_txt):
     _competitor_str = ""
     _total_cost = 0
     txt_lines = _txt.split("\n")
-    [_log, _competitor_str, _total_cost] = competitor_openai(key, txt_lines, N_batch)
+    [_log, _competitor_str, _total_cost_str] = competitor_openai(key, txt_lines, N_batch)
     print(_log)
-    return [_competitor_str, str(_total_cost)]
+    return [_competitor_str, _total_cost_str]
 
 
 

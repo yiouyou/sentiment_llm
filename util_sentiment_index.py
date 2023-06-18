@@ -94,8 +94,7 @@ For each comment, there is no need to output the comment itself, just output the
     _log += "-" * 40 + "\n"
     _log += "\n".join(sentiments) + "\n"
     _log += "-" * 40 + "\n"
-    _total_cost_str = format(_total_cost, ".5f")
-    _log += f"\nTotal Cost: ${_total_cost_str}\n"
+    _log += f"\nTotal Cost: ${str(_total_cost)}\n"
     if len(_sentences) == len(sentiments):
         for i in range(0, len(_sentences)):
             sentences.append(f"{i+1}) \"{_sentences[i]}\"")
@@ -103,12 +102,11 @@ For each comment, there is no need to output the comment itself, just output the
         _sentiments_str = "\n".join(sentiments)
     else:
         _log += "Error: len(sentences) != len(sentiments)" + "\n"
-    return [_log, _sentences_str, _sentiments_str, _total_cost_str]
+    return [_log, _sentences_str, _sentiments_str, _total_cost]
 
 
 def sentiment_llm(_txt):
     global key
-    import re
     _log = ""
     _sentences_str = ""
     _sentiments_str = ""
@@ -116,14 +114,14 @@ def sentiment_llm(_txt):
     txt_lines = _txt.split("\n")
     [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, txt_lines, N_batch)
     print(_log)
-    _out = []
+    _out = ""
     if _sentences_str != "" and _sentiments_str != "":
         sentences = _sentences_str.split("\n")
         sentiments = _sentiments_str.split("\n")
         if len(sentences) == len(sentiments):
             for i in range(0, len(sentences)):
-                # i_re = f"{sentences[i]}|{sentiments[i]}\n"
-                _out.append(re.sub('\d+\)\s+', '', sentiments[i]))
+                i_re = f"{i+1}) \"{sentences[i]}\"|{sentiments[i]}\n"
+                _out += i_re
             print(f"return:\n{_out}")
         else:
             print("Error: len(sentences) != len(sentiments)")

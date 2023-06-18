@@ -1,7 +1,7 @@
 import gradio as gr
 from util_sentiment import sentiment_openai
 from util_competitor import competitor_openai
-from util_7P import P7_openai
+from util_7P import P7_openai, parse_7P_str
 
 
 output_sentiments_file = "_sentiments.txt"
@@ -23,11 +23,11 @@ def chg_btn_color_if_file(file):
 
 
 def llm_sentiment(key, file_name, N_batch):
-    import os
+    import os, re
     _log = ""
     _sentences_str = ""
     _sentiments_str = ""
-    _total_cost = 0
+    _total_cost_str = ""
     # print(f"file_name: {file_name}")
     if os.path.exists(file_name):
         left, right = os.path.splitext(os.path.basename(file_name))
@@ -35,16 +35,19 @@ def llm_sentiment(key, file_name, N_batch):
         output_sentiments_file = f"{left}_sentiments.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-        [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, txt_lines, N_batch)
+        [_log, _sentences_str, _sentiments_str, _total_cost_str] = sentiment_openai(key, txt_lines, N_batch)
         if _sentences_str != "" and _sentiments_str != "":
             sentences = _sentences_str.split("\n")
             sentiments = _sentiments_str.split("\n")
+            sentiments_ = []
+            for i in sentiments:
+                sentiments_.append(re.sub('\d+\)\s+', '', i))
             with open(output_sentiments_file, "w", encoding='utf-8') as wf:
                 for i in range(0, len(sentences)):
-                    i_re= f"{sentences[i]}|{sentiments[i]}\n"
+                    i_re= f"{sentences[i]}|{sentiments_[i]}\n"
                     wf.write(i_re)
             _log += f"Write file: {output_sentiments_file}" + "\n"
-    return [_log, _sentences_str, _sentiments_str]
+    return [_log, _sentences_str, sentiments_]
 
 def run_llm_sentiment(key, file):
     if key and file:
@@ -69,7 +72,7 @@ def llm_7P(key, file_name, N_batch):
     import re
     _log = ""
     _7P_str = ""
-    _total_cost = 0
+    _total_cost_str = ""
     # print(f"file_name: {file_name}")
     if os.path.exists(file_name):
         left, right = os.path.splitext(os.path.basename(file_name))
@@ -77,15 +80,15 @@ def llm_7P(key, file_name, N_batch):
         output_7P_file = f"{left}_7P.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-        [_log, _7P_str, _total_cost] = P7_openai(key, txt_lines, N_batch)
-    _7P_str = re.sub(r"\n+", r"\n", _7P_str)
-    with open(output_7P_file, "w", encoding='utf-8') as wf:
-        wf.write(_7P_str)
+        [_log, _7P_str, _total_cost_str] = P7_openai(key, txt_lines, N_batch)
+        _7P_str = parse_7P_str(_7P_str)
+        with open(output_7P_file, "w", encoding='utf-8') as wf:
+            wf.write(_7P_str)
     return _7P_str
 
 def run_llm_7P(key, file):
     if key and file:
-        return llm_7P(key, file.name, 10)
+        return llm_7P(key, file.name, 3)
     elif not file and key:
         return ["ERROR: Please upload a TXT file first!", "", ""]
     elif not key and file:
@@ -106,7 +109,7 @@ def llm_competitor(key, file_name, N_batch):
     import re
     _log = ""
     _competitor_str = ""
-    _total_cost = 0
+    _total_cost_str = ""
     # print(f"file_name: {file_name}")
     if os.path.exists(file_name):
         left, right = os.path.splitext(os.path.basename(file_name))
@@ -114,10 +117,9 @@ def llm_competitor(key, file_name, N_batch):
         output_competitor_file = f"{left}_competitor.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-        [_log, _competitor_str, _total_cost] = competitor_openai(key, txt_lines, N_batch)
-    _competitor_str = re.sub(r"\n+", r"\n", _competitor_str)
-    with open(output_competitor_file, "w", encoding='utf-8') as wf:
-        wf.write(_competitor_str)
+        [_log, _competitor_str, _total_cost_str] = competitor_openai(key, txt_lines, N_batch)
+        with open(output_competitor_file, "w", encoding='utf-8') as wf:
+            wf.write(_competitor_str)
     return _competitor_str
 
 def run_llm_competitor(key, file):
@@ -199,10 +201,10 @@ with gr.Blocks(title = "Customer Sentiment Plus Analysis by LLM") as demo:
 #     _log = ""
 #     _sentences_str = ""
 #     _sentiments_str = ""
-#     _total_cost = 0
+#     _total_cost_str = ""
 #     txt_lines = txt.split("\n")
-#     [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, txt_lines, N_batch)
-#     res = {"log": _log, "sentences": _sentences_str, "sentiments": _sentiments_str, "cost": _total_cost}
+#     [_log, _sentences_str, _sentiments_str, _total_cost_str] = sentiment_openai(key, txt_lines, N_batch)
+#     res = {"log": _log, "sentences": _sentences_str, "sentiments": _sentiments_str, "cost": _total_cost_str}
 #     json_str = json.dumps(res, indent=4, default=str)
 #     return Response(content=json_str, media_type='application/json')
 
