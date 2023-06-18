@@ -48,7 +48,7 @@ def llm_sentiment(key, file_name, N_batch):
 
 def run_llm_sentiment(key, file):
     if key and file:
-        return llm_sentiment(key, file.name, 10)
+        return llm_sentiment(key, file.name, 5)
     elif not file and key:
         return ["ERROR: Please upload a TXT file first!", "", ""]
     elif not key and file:
@@ -64,7 +64,7 @@ def show_sentiment_file(text):
         return gr.update(value=output_sentiments_file)
 
 
-def llm_7P(key, file_name):
+def llm_7P(key, file_name, N_batch):
     import os
     import re
     _log = ""
@@ -77,7 +77,7 @@ def llm_7P(key, file_name):
         output_7P_file = f"{left}_7P.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-        [_log, _7P_str, _total_cost] = P7_openai(key, txt_lines)
+        [_log, _7P_str, _total_cost] = P7_openai(key, txt_lines, N_batch)
     _7P_str = re.sub(r"\n+", r"\n", _7P_str)
     with open(output_7P_file, "w", encoding='utf-8') as wf:
         wf.write(_7P_str)
@@ -85,7 +85,7 @@ def llm_7P(key, file_name):
 
 def run_llm_7P(key, file):
     if key and file:
-        return llm_7P(key, file.name)
+        return llm_7P(key, file.name, 5)
     elif not file and key:
         return ["ERROR: Please upload a TXT file first!", "", ""]
     elif not key and file:
@@ -101,7 +101,7 @@ def show_7P_file(text):
         return gr.update(value=output_7P_file)
 
 
-def llm_competitor(key, file_name):
+def llm_competitor(key, file_name, N_batch):
     import os
     import re
     _log = ""
@@ -114,7 +114,7 @@ def llm_competitor(key, file_name):
         output_competitor_file = f"{left}_competitor.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-        [_log, _competitor_str, _total_cost] = competitor_openai(key, txt_lines)
+        [_log, _competitor_str, _total_cost] = competitor_openai(key, txt_lines, N_batch)
     _competitor_str = re.sub(r"\n+", r"\n", _competitor_str)
     with open(output_competitor_file, "w", encoding='utf-8') as wf:
         wf.write(_competitor_str)
@@ -122,7 +122,7 @@ def llm_competitor(key, file_name):
 
 def run_llm_competitor(key, file):
     if key and file:
-        return llm_competitor(key, file.name)
+        return llm_competitor(key, file.name, 5)
     elif not file and key:
         return ["ERROR: Please upload a TXT file first!", "", ""]
     elif not key and file:
@@ -182,33 +182,36 @@ with gr.Blocks(title = "Customer Sentiment Plus Analysis by LLM") as demo:
 
 
 
-from fastapi import FastAPI, Response
-import json
-app = FastAPI()
+# from fastapi import FastAPI, Response
+# import json
+# app = FastAPI()
 
-@app.get("/")
-def index():
-    return {"message": "Customer Sentiment Plus Analysis by LLM"}
+# @app.get("/")
+# def index():
+#     return {"message": "Customer Sentiment Plus Analysis by LLM"}
 
-app = gr.mount_gradio_app(app, demo, path="/ui")
+# app = gr.mount_gradio_app(app, demo, path="/ui")
 
-
-@app.post("/api/v1/sentiment/")
-async def sentiment_analysis_api(txt: str):
-    key = "sk-**********"
-    N_batch = 10
-    _log = ""
-    _sentences_str = ""
-    _sentiments_str = ""
-    _total_cost = 0
-    txt_lines = txt.split("\n")
-    [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, txt_lines, N_batch)
-    res = {"log": _log, "sentences": _sentences_str, "sentiments": _sentiments_str, "cost": _total_cost}
-    json_str = json.dumps(res, indent=4, default=str)
-    return Response(content=json_str, media_type='application/json')
+# @app.post("/api/v1/sentiment/")
+# async def sentiment_analysis_api(txt: str):
+#     key = "sk-**********"
+#     N_batch = 5
+#     _log = ""
+#     _sentences_str = ""
+#     _sentiments_str = ""
+#     _total_cost = 0
+#     txt_lines = txt.split("\n")
+#     [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, txt_lines, N_batch)
+#     res = {"log": _log, "sentences": _sentences_str, "sentiments": _sentiments_str, "cost": _total_cost}
+#     json_str = json.dumps(res, indent=4, default=str)
+#     return Response(content=json_str, media_type='application/json')
 
 
 if __name__ == "__main__":
-    demo.queue(concurrency_count=1).launch(share=True)
-    # demo.queue(concurrency_count=1).launch(server_name="0.0.0.0", share=False)
+    # demo.queue(concurrency_count=1).launch(share=True)
+    demo.queue(concurrency_count=1).launch(
+        server_name="0.0.0.0",
+        server_port=7788,
+        share=False,
+    )
 
