@@ -39,8 +39,7 @@ The customer comment texts that require marketing strategy analysis are as follo
 
 For each comment, there is no need to output the comment itself, just output the comment index and competitor analysis result. Each competitor analysis result MUST in JSON format, with the 'competitors' the main key and the identified competitors as the values. If no information is available for a certain key, set its value as an empty string.
 
-The final output should be in the format of "[{}, {}, ...]", in which the order of output array is the order of index of given comments. Please output the analysis results in English lowercase:
-
+The final output should be in the format of "[{"":""}, {"":""}, ...]", in which the order of output array is the order of index of given comments. Please output the analysis results in English lowercase:
 """
     prompt = PromptTemplate(
         input_variables=["_content"],
