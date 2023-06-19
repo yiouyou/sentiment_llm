@@ -115,7 +115,7 @@ def sentiment_llm(_txt):
     _total_cost = 0
     txt_lines = _txt.split("\n")
     [_log, _sentences_str, _sentiments_str, _total_cost] = sentiment_openai(key, txt_lines, N_batch)
-    print(_log)
+    # print(_log)
     _out = []
     if _sentences_str != "" and _sentiments_str != "":
         sentences = _sentences_str.split("\n")
@@ -124,7 +124,7 @@ def sentiment_llm(_txt):
             for i in range(0, len(sentences)):
                 # i_re = f"{sentences[i]}|{sentiments[i]}\n"
                 _out.append(re.sub('\d+\)\s+', '', sentiments[i]))
-            print(f"return:\n{_out}")
+            # print(f"return:\n{_out}")
         else:
             print("Error: len(sentences) != len(sentiments)")
     return [_out, str(_total_cost)]
@@ -137,4 +137,6 @@ if __name__ == "__main__":
 .med en basic og en SLIM. Den i Bones kan tages retur efter 2 måneder, den anden er købt.
 Tank leveres asap Vi borer huller og trækker rør ind i bygningen Kværnen indkøbes/faktureres og leveres ca. 1/4-15
 """
-    print(sentiment_llm(_txt))
+    [_re, _cost] = sentiment_llm(_txt)
+    print(type(_re), _re)
+    print(type(_cost), _cost)

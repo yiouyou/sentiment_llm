@@ -86,12 +86,22 @@ def competitor_llm(_txt):
     _total_cost = 0
     txt_lines = _txt.split("\n")
     [_log, _competitor_str, _total_cost_str] = competitor_openai(key, txt_lines, N_batch)
-    print(_log)
-    return [_competitor_str, _total_cost_str]
+    # print(_log)
+    # print(_competitor_str)
+    import ast
+    _competitor = []
+    _competitor_str_array = _competitor_str.split("\n")
+    for i in _competitor_str_array:
+        _i = ast.literal_eval(i)
+        _competitor.extend(_i)    
+    # print(type(_competitor), _competitor)
+    return [_competitor, _total_cost_str]
 
 
 
 if __name__ == "__main__":
 
     _txt = "Ved ikke om de har noget organisk affald... på deres hovedkontor har de et køkken, men det er en ekstern operatør der driver det... det er Michael Kjær fra driften, et fælles køkken med andre virksomheder.. Ring til ham om det. NCC bestemmer desuden selv om de skal have vores projekt med i loopet på dgnb point i byggeriet... i deres koncept udvikling...; De er ved at definere det og vi kan vende retur til Martin i Januar, hvor han ved hvem vi skal have møde med om det."
-    print(competitor_llm(_txt))
+    [_re, _cost] = competitor_llm(_txt)
+    print(type(_re), _re)
+    print(type(_cost), _cost)

@@ -2,7 +2,7 @@ import pprint as pp
 
 
 key = "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"
-N_batch = 5
+N_batch = 3
 
 
 def call_openai(chain, _content):
@@ -82,12 +82,18 @@ Please output the analysis results in English lowercase:
 
 def parse_7P_str(_str):
     import re
+    import json
     _re = []
     _li = _str.split("\n")
     for i in _li:
         if i:
-            _re.append(re.sub('.+\s*{', '{', i))
-    _re_str = "[" + ",\n".join(_re) + "]"
+            # print(i)
+            _i = re.sub('.+\s*{', '{', i)
+            # print(_i)
+            _i_json = json.loads(_i)
+            # print(type(_i_json), _i_json, "\n")
+            _re.append(_i)
+    _re_str = '[' + ', '.join(_re) + ']'
     return _re_str
 
 
@@ -98,13 +104,20 @@ def P7_llm(_txt):
     _total_cost = 0
     txt_lines = _txt.split("\n")
     [_log, _7P_str, _total_cost_str] = P7_openai(key, txt_lines, N_batch)
-    print(_log)
+    # print(_log)
+    # print(_7P_str)
+    import ast
     _7P_str = parse_7P_str(_7P_str)
-    return [_7P_str, _total_cost_str]
+    # print(_7P_str)
+    _7P = ast.literal_eval(_7P_str)
+    # print(type(_7P), _7P)
+    return [_7P, _total_cost_str]
 
 
 
 if __name__ == "__main__":
 
     _txt = "Ved ikke om de har noget organisk affald... på deres hovedkontor har de et køkken, men det er en ekstern operatør der driver det... det er Michael Kjær fra driften, et fælles køkken med andre virksomheder.. Ring til ham om det. NCC bestemmer desuden selv om de skal have vores projekt med i loopet på dgnb point i byggeriet... i deres koncept udvikling...; De er ved at definere det og vi kan vende retur til Martin i Januar, hvor han ved hvem vi skal have møde med om det."
-    print(P7_llm(_txt))
+    [_re, _cost] = P7_llm(_txt)
+    print(type(_re), _re)
+    print(type(_cost), _cost)
