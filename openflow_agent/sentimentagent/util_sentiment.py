@@ -51,8 +51,11 @@ For each comment, there is no need to output the comment itself, just output the
         input_variables=["_content", "_example"],
         template=template,
     )
-    with open("openai_prompt.examples", "r", encoding="utf-8") as ef:
-        _example = "".join(ef.readlines())
+    ##### 随机取10个example
+    import random
+    with open("examples_sentiment.txt", "r", encoding="utf-8") as ef:
+        _example = "".join(random.sample(ef.readlines(), 30))
+    ##### LLMChain
     chain = LLMChain(llm=llm, prompt=prompt)
     ##### split comment to sentences
     _sentences = []
@@ -78,6 +81,7 @@ For each comment, there is no need to output the comment itself, just output the
             for j in range(0, len(batch)):
                 _content = _content + f"{n*N_batch +j +1}) {batch[j]}\n"
             _log += _content
+            # print(prompt.format(_content=_content, _example=_example))
             [b_re, b_tokens, b_cost, b_log] = call_openai(chain, _content, _example)
             _log += b_log
             _total_cost += b_cost

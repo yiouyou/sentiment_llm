@@ -5,14 +5,14 @@ key = "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"
 N_batch = 3
 
 
-def call_openai(chain, _content, _example):
+def call_openai(chain, _content):
     from langchain.callbacks import get_openai_callback
     _re = ""
     _tokens = 0
     _cost = 0
     _log = ""
     with get_openai_callback() as cb:
-        _re = chain.run(_content=_content, _example=_example)
+        _re = chain.run(_content=_content)
         _tokens = cb.total_tokens
         _cost = cb.total_cost
         _log += f"\nTokens: {cb.total_tokens} = (Prompt {cb.prompt_tokens} + Completion {cb.completion_tokens})\n"
@@ -50,9 +50,6 @@ def P7_openai(key, txt_lines, N_batch):
     template = """
 Ignore previous instructions. As a marketing strategy analyst, your task is to identify and extract the 7Ps from each customer comment using nouns, according to the 7Ps Marketing Mix.
 
-Below are some examples of 7Ps analysis for some customer comments in csv format, where the customer's comments are enclosed in double quotes, and after the comma is the 7Ps analysis results:
-{_example}
-
 The customer comments that require marketing strategy analysis are as follows:
 {_content}
 
@@ -61,13 +58,9 @@ For each comment, identify and extract relative nouns of 7Ps from and only from 
 Please output the analysis results in English lowercase:
 """
     prompt = PromptTemplate(
-        input_variables=["_content", "_example"],
+        input_variables=["_content"],
         template=template,
     )
-    ##### 随机取10个example
-    import random
-    with open("examples_7P.txt", "r", encoding="utf-8") as ef:
-        _example = "".join(random.sample(ef.readlines(), 30))
     ##### LLMChain
     chain = LLMChain(llm=llm, prompt=prompt)
     ##### split note to sentences
@@ -83,8 +76,8 @@ Please output the analysis results in English lowercase:
             for j in range(0, len(batch)):
                 _content = _content + f"{n*N_batch +j +1}) {batch[j]}\n"
             _log += _content
-            # print(prompt.format(_content=_content, _example=_example))
-            [b_re, b_tokens, b_cost, b_log] = call_openai(chain, _content, _example)
+            # print(prompt.format(_content=_content))
+            [b_re, b_tokens, b_cost, b_log] = call_openai(chain, _content)
             _log += b_log
             _total_cost += b_cost
             all_re += b_re + "\n"
