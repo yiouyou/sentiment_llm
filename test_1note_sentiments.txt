@@ -1,6 +1,0 @@
-1) "Ved ikke om de har noget organisk affald.."|neutral (interjections, modal particles, nouns or adjectives with no obvious emotional meaning)
-2) "på deres hovedkontor har de et køkken, men det er en ekstern operatør der driver det.."|neutral (interjections, modal particles, nouns or adjectives with no obvious emotional meaning)
-3) "det er Michael Kjær fra driften, et fælles køkken med andre virksomheder."|positive (willing to communicate further or likely to purchase in the future)
-4) "Ring til ham om det."|neutral (interjections, modal particles, nouns or adjectives with no obvious emotional meaning)
-5) "NCC bestemmer desuden selv om de skal have vores projekt med i loopet på dgnb point i byggeriet.."|neutral (interjections, modal particles, nouns or adjectives with no obvious emotional meaning)
-6) "i deres koncept udvikling...; De er ved at definere det og vi kan vende retur til Martin i Januar, hvor han ved hvem vi skal have møde med om det."|positive (willing to communicate further or likely to purchase in the future)
