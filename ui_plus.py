@@ -80,8 +80,8 @@ def llm_7P(key, file_name, N_batch):
         output_7P_file = f"{left}_7P.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-        [_log, _7P_str, _total_cost_str] = P7_openai(key, txt_lines, N_batch)
-        _7P_str = parse_7P_str(_7P_str)
+        [_log, _7P_str, _total_cost_str, _sentences] = P7_openai(key, txt_lines, N_batch)
+        _7P_str = parse_7P_str(_7P_str, _sentences)
         with open(output_7P_file, "w", encoding='utf-8') as wf:
             wf.write(_7P_str)
     return _7P_str
