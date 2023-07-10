@@ -14,7 +14,8 @@ def call_openai(chain, _content, _example):
         _tokens = cb.total_tokens
         _cost = cb.total_cost
         _log += f"\nTokens: {cb.total_tokens} = (Prompt {cb.prompt_tokens} + Completion {cb.completion_tokens})\n"
-        _log += f"Cost: ${cb.total_cost}\n\n"
+        _cost_str = format(cb.total_cost, ".5f")
+        _log += f"Cost: ${_cost_str}\n\n"
     # print(_re)
     return [_re, _tokens, _cost, _log]
 
@@ -144,12 +145,14 @@ def call_openai_tagging(chain, _sentence):
         _cost = cb.total_cost
         _log += f"\nTokens: {cb.total_tokens} = (Prompt {cb.prompt_tokens} + Completion {cb.completion_tokens})\n"
         _log += f"Cost: ${cb.total_cost}\n\n"
-    _re = f"{_re['sentiment']}({_re['scale']}: {_re['why']})"
+    # _re = f"{_re['sentiment']}({_re['scale']}: {_re['why']})"
+    _re = f"{_re['sentiment']}({_re['why']})"
     print(_sentence, _re)
     print(_log)
     return [_re, _tokens, _cost, _log]
 
 def sentiment_openai_tagging(txt_lines):
+    from langchain.chains import create_tagging_chain
     from dotenv import load_dotenv
     load_dotenv()
     from langchain.chat_models import ChatOpenAI

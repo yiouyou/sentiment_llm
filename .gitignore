@@ -32,6 +32,9 @@ MANIFEST
 *.manifest
 *.spec
 
+# openflow_agent
+openflow_agent/sentimentagent/.env
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt

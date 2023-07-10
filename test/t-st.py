@@ -90,6 +90,7 @@ def call_openai_tagging(chain, _sentence):
     return [_re, _tokens, _cost, _log]
 
 def sentiment_openai_tagging(txt_lines):
+    from langchain.chains import create_tagging_chain
     from dotenv import load_dotenv
     load_dotenv()
     from langchain.chat_models import ChatOpenAI
