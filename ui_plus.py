@@ -108,7 +108,7 @@ def llm_competitor(file_name):
         output_competitor_file = f"{left}_competitor.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-        [_log, _competitor_str, _total_cost_str] = competitor_openai_tagging(txt_lines)
+        [_log, _competitor_str, _total_cost_str, _sentences] = competitor_openai_tagging(txt_lines)
         with open(output_competitor_file, "w", encoding='utf-8') as wf:
             wf.write(_competitor_str)
     return _competitor_str
