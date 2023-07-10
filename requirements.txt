@@ -2,3 +2,4 @@ openai
 langchain
 fastapi
 gradio
+python-dotenv

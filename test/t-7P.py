@@ -168,11 +168,11 @@ def P7_llm_tagging(_txt):
 
 # _txt = "They are interested in talking to us, because they think we have a good price, although they use Frederik Machinery already."
 
-_txt ="""Har ringet ind til deres fysioterapi tidsbestilling, men det er outsourcet til Meyers køkkener, så det er nok dem jeg skal tale med
-er en del af en kæde så det er dem jeg skal have fat i
-han sidder i VVS og har ikke meget med de her sager at gøre
-Christian har skrevet at det ikke var aktuelt lige nu med hjemmesiden til udlejning, da der var kø, så der behøvede ikke PR
-Ikke inde i Niras, han er facility mand
+_txt = """Har ringet ind til deres fysioterapi tidsbestilling, men det er outsourcet til Meyers køkkener, så det er nok dem jeg skal tale med.
+er en del af en kæde så det er dem jeg skal have fat i.
+han sidder i VVS og har ikke meget med de her sager at gøre.
+Christian har skrevet at det ikke var aktuelt lige nu med hjemmesiden til udlejning, da der var kø, så der behøvede ikke PR.
+Ikke inde i Niras, han er facility mand.
 Jan Milling skriver i mail 28 juni at han skal forhandle renovation i oktober og omtaler vores 'fine materiale'.
 Thorballe var positiv, mente tilbuddet var som det skulle være, og det hele er kun stoppet grundet outsourcing, som de ikke kendte til.
 Der har været Opslag på Linked In af Laust omkring affaldssortering og vi talte om at tage vores dialog videre.

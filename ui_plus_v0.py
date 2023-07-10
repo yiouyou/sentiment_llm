@@ -1,7 +1,7 @@
 import gradio as gr
-from util_sentiment import sentiment_openai_tagging
-from util_competitor import competitor_openai_tagging
-from util_7P import P7_openai_tagging
+from util_sentiment import sentiment_openai
+from util_competitor import competitor_openai
+from util_7P import P7_openai, parse_7P_str
 
 
 output_sentiments_file = "_sentiments.txt"
@@ -35,7 +35,7 @@ def llm_sentiment(key, file_name, N_batch):
         output_sentiments_file = f"{left}_sentiments.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-        [_log, _sentences_str, _sentiments_str, _total_cost_str] = sentiment_openai_tagging(key, txt_lines, N_batch)
+        [_log, _sentences_str, _sentiments_str, _total_cost_str] = sentiment_openai(key, txt_lines, N_batch)
         if _sentences_str != "" and _sentiments_str != "":
             sentences = _sentences_str.split("\n")
             sentiments = _sentiments_str.split("\n")
@@ -80,7 +80,8 @@ def llm_7P(key, file_name, N_batch):
         output_7P_file = f"{left}_7P.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-        [_log, _7P_str, _total_cost_str, _sentences] = P7_openai_tagging(key, txt_lines, N_batch)
+        [_log, _7P_str, _total_cost_str, _sentences] = P7_openai(key, txt_lines, N_batch)
+        _7P_str = parse_7P_str(_7P_str, _sentences)
         with open(output_7P_file, "w", encoding='utf-8') as wf:
             wf.write(_7P_str)
     return _7P_str
@@ -116,7 +117,7 @@ def llm_competitor(key, file_name, N_batch):
         output_competitor_file = f"{left}_competitor.txt"
         with open(file_name, encoding='utf-8') as rf:
             txt_lines = rf.readlines()
-        [_log, _competitor_str, _total_cost_str] = competitor_openai_tagging(key, txt_lines, N_batch)
+        [_log, _competitor_str, _total_cost_str] = competitor_openai(key, txt_lines, N_batch)
         with open(output_competitor_file, "w", encoding='utf-8') as wf:
             wf.write(_competitor_str)
     return _competitor_str
@@ -202,7 +203,7 @@ with gr.Blocks(title = "Customer Sentiment Plus Analysis by LLM") as demo:
 #     _sentiments_str = ""
 #     _total_cost_str = ""
 #     txt_lines = txt.split("\n")
-#     [_log, _sentences_str, _sentiments_str, _total_cost_str] = sentiment_openai_tagging(key, txt_lines, N_batch)
+#     [_log, _sentences_str, _sentiments_str, _total_cost_str] = sentiment_openai(key, txt_lines, N_batch)
 #     res = {"log": _log, "sentences": _sentences_str, "sentiments": _sentiments_str, "cost": _total_cost_str}
 #     json_str = json.dumps(res, indent=4, default=str)
 #     return Response(content=json_str, media_type='application/json')
