@@ -67,7 +67,7 @@ Please output the analysis results in English lowercase:
     ##### 随机取10个example
     import random
     with open("examples_7P.txt", "r", encoding="utf-8") as ef:
-        _example = "".join(random.sample(ef.readlines(), 30))
+        _example = "".join(random.sample(ef.readlines(), 10))
     ##### LLMChain
     chain = LLMChain(llm=llm, prompt=prompt)
     ##### split note to sentences

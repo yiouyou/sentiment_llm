@@ -54,7 +54,7 @@ For each comment, there is no need to output the comment itself, just output the
     ##### 随机取10个example
     import random
     with open("examples_sentiment.txt", "r", encoding="utf-8") as ef:
-        _example = "".join(random.sample(ef.readlines(), 30))
+        _example = "".join(random.sample(ef.readlines(), 10))
     ##### LLMChain
     chain = LLMChain(llm=llm, prompt=prompt)
     ##### split comment to sentences

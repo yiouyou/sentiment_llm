@@ -1,30 +1,27 @@
-"Har givet den videre til Jan, som er ejer.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Jan Milling skriver i mail 28 juni at han skal forhandle renovation i oktober og omtaler vores "fine materiale".", {"product":"renovation", "price":"", "place":"", "promotion":"omtaler",  "people":"", "processes":"", "physical evidence":""}
-"Jeg foreslog møde sidste halvdel Juli eller i august.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Thorballe var positiv, mente tilbuddet var som det skulle være, og det hele er kun stoppet grundet outsourcing, som de ikke kendte til.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"outsourcing", "physical evidence":""}
-"De har fået at vide, at det ville være på plads om 2-3 uger.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Bad MM ringe tilbage eller sende tid for muligt møde på sms.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Helle Pedersen gik direkte på tlfsvarer.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Vil gerne have en mail sådan at han kan give en status og han vil også gerne have en intromail.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Rune vil ringe til kunden imorgen høre dem ad.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Talte med ham ifm.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"bud til Bent Brandt.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Fullgte 12 maj op på, hvorvidt den vandt gehør.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Han har ikke nævnt nogen specifik dato men sagde ca om 14 dage hvilket Er denne dato.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Følge op på denne&nbsp;.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Følge op på denne&nbsp;.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Skal ringe igen om 3 uger.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Opfølgning 29/6-2023.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Har givet den videre til Jan, som er ejer.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Jan Milling skriver i mail 28 juni at han skal forhandle renovation i oktober og omtaler vores "fine materiale".", {"product":"renovation", "price":"", "place":"", "promotion":"omtaler",  "people":"", "processes":"", "physical evidence":""}
-"Thorballe var positiv, mente tilbuddet var som det skulle være, og det hele er kun stoppet grundet outsourcing, som de ikke kendte til.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"outsourcing", "physical evidence":""}
-"Opfølgning på lejeaftale.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Bad MM ringe tilbage eller sende tid for muligt møde på sms.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Helle Pedersen gik direkte på tlfsvarer.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Der har været Opslag på Linked In af Laust omkring affaldssortering og vi talte om at tage vores dialog videre.", {"product":"affaldssortering", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Vil gerne have en mail sådan at han kan give en status og han vil også gerne have en intromail.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"Rune vil ringe til kunden imorgen høre dem ad.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"vil gerne høre lidt mere om det, et højaktuelt emne og hvad der er på markedet, omvendt det bekymrer ham at give 3.", {"product":"", "price":"", "place":"markedet", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"bud til Bent Brand.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
-"opfølgning 16 Juni.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "processes":"", "physical evidence":""}
+"Har ringet ind til deres fysioterapi tidsbestilling, men det er outsourcet til Meyers køkkener, så det er nok dem jeg skal tale med", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"outsourcet", "physical evidence":""}
+"er en del af en kæde så det er dem jeg skal have fat i", {"product":"", "price":"", "place":"kæde", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"han sidder i VVS og har ikke meget med de her sager at gøre", {"product":"VVS", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"Christian har skrevet at det ikke var aktuelt lige nu med hjemmesiden til udlejning, da der var kø, så der behøvede ikke PR", {"product":"hjemmesiden", "price":"", "place":"", "promotion":"PR", "people":"", "process":"kø", "physical evidence":""}
+"Ikke inde i Niras, han er facility mand", {"product":"", "price":"", "place":"", "promotion":"", "people":"facility mand", "process":"", "physical evidence":""}
+"Jan Milling skriver i mail 28 juni at han skal forhandle renovation i oktober og omtaler vores 'fine materiale'.", {"product":"renovation", "price":"", "place":"", "promotion":"omtaler",  "people":"", "process":"", "physical evidence":""}
+"Thorballe var positiv, mente tilbuddet var som det skulle være, og det hele er kun stoppet grundet outsourcing, som de ikke kendte til.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"outsourcing", "physical evidence":""}
+"Der har været Opslag på Linked In af Laust omkring affaldssortering og vi talte om at tage vores dialog videre.", {"product":"affaldssortering", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"vil gerne høre lidt mere om det, et højaktuelt emne og hvad der er på markedet, omvendt det bekymrer ham at give 3.", {"product":"", "price":"", "place":"markedet", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Har givet den videre til Jan, som er ejer.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Jeg foreslog møde sidste halvdel Juli eller i august.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"De har fået at vide, at det ville være på plads om 2-3 uger.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Bad MM ringe tilbage eller sende tid for muligt møde på sms.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Helle Pedersen gik direkte på tlfsvarer.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Vil gerne have en mail sådan at han kan give en status og han vil også gerne have en intromail.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Rune vil ringe til kunden imorgen høre dem ad.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Talte med ham ifm.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"bud til Bent Brandt.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Fullgte 12 maj op på, hvorvidt den vandt gehør.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Han har ikke nævnt nogen specifik dato men sagde ca om 14 dage hvilket Er denne dato.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Følge op på denne&nbsp;.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Skal ringe igen om 3 uger.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Opfølgning 29/6-2023.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Opfølgning på lejeaftale.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"bud til Bent Brand.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
+"opfølgning 16 Juni.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}

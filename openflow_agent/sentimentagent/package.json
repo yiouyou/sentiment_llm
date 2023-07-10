@@ -6,13 +6,6 @@
     "openiap": {
         "daemon": true,
         "chromium": false,
-        "language": "nodejs",
-        "typescript": false
-    },
-    "scripts": {
-        "updateapi": "npm uninstall @openiap/nodeapi && npm i @openiap/nodeapi"
-    },
-    "dependencies": {
-        "@openiap/nodeapi": "^0.0.17"
+        "language": "python"
     }
 }
