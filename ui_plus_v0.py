@@ -90,11 +90,11 @@ def run_llm_7P(key, file):
     if key and file:
         return llm_7P(key, file.name, 3)
     elif not file and key:
-        return ["ERROR: Please upload a TXT file first!", "", ""]
+        return ["ERROR: Please upload a TXT file first!"]
     elif not key and file:
-        return ["ERROR: Please input your OpenAI API Key first!", "", ""]
+        return ["ERROR: Please input your OpenAI API Key first!"]
     else:
-        return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!", "", ""]
+        return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!"]
 
 def show_7P_file(text):
     # print(f"text: {text}")
@@ -126,11 +126,11 @@ def run_llm_competitor(key, file):
     if key and file:
         return llm_competitor(key, file.name, 10)
     elif not file and key:
-        return ["ERROR: Please upload a TXT file first!", "", ""]
+        return ["ERROR: Please upload a TXT file first!"]
     elif not key and file:
-        return ["ERROR: Please input your OpenAI API Key first!", "", ""]
+        return ["ERROR: Please input your OpenAI API Key first!"]
     else:
-        return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!", "", ""]
+        return ["ERROR: Please input your OpenAI API Key AND upload a TXT file first!"]
 
 def show_competitor_file(text):
     # print(f"text: {text}")
