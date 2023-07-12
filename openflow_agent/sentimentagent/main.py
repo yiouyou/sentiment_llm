@@ -7,25 +7,28 @@ from util_7P import P7_llm
 
 
 async def __wait_for_message(cli: Client, message, payload):
-    print(payload)
-    _sentiment = ""
-    _7p = ""
-    _competitor = ""
-    _cost_sentiment = ""
-    _cost_competitor = ""
-    _cost_7p = ""
-    _total_cost_d5 = ""
-    [_sentiment, _cost_sentiment] = sentiment_llm(payload["text"])
-    [_competitor, _cost_competitor] = competitor_llm(payload["text"])
-    [_7p, _cost_7p] = P7_llm(payload["text"])
-    payload["sentiment"] = _sentiment
-    payload["pronouns"] = _competitor
-    payload["noun"] = _7p
-    _cost_sentiment_d5 = format(float(_cost_sentiment), ".5f")
-    _cost_competitor_d5 = format(float(_cost_competitor), ".5f")
-    _cost_7p_d5 = format(float(_cost_7p), ".5f")
-    _total_cost_d5 = format(float(_cost_sentiment) + float(_cost_competitor) + float(_cost_7p), ".5f")
-    payload["parameters"] = f"${_total_cost_d5}=(${_cost_sentiment_d5}+${_cost_competitor_d5}+${_cost_7p_d5})"
+    try:
+        print(payload)
+        _sentiment = ""
+        _7p = ""
+        _competitor = ""
+        _cost_sentiment = ""
+        _cost_competitor = ""
+        _cost_7p = ""
+        _total_cost_d5 = ""
+        [_sentiment, _cost_sentiment] = sentiment_llm(payload["text"])
+        [_competitor, _cost_competitor] = competitor_llm(payload["text"])
+        [_7p, _cost_7p] = P7_llm(payload["text"])
+        payload["sentiment"] = _sentiment
+        payload["pronouns"] = _competitor
+        payload["noun"] = _7p
+        _cost_sentiment_d5 = format(float(_cost_sentiment), ".5f")
+        _cost_competitor_d5 = format(float(_cost_competitor), ".5f")
+        _cost_7p_d5 = format(float(_cost_7p), ".5f")
+        _total_cost_d5 = format(float(_cost_sentiment) + float(_cost_competitor) + float(_cost_7p), ".5f")
+        payload["parameters"] = f"${_total_cost_d5}=(${_cost_sentiment_d5}+${_cost_competitor_d5}+${_cost_7p_d5})"
+    except Exception as e:
+        print(e)
     return payload
 
 
