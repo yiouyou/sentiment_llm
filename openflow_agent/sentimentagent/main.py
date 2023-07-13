@@ -1,9 +1,9 @@
 import os
 import openiap, asyncio
 from openiap import Client
-from util_sentiment import sentiment_llm
-from util_competitor import competitor_llm
-from util_7P import P7_llm
+from util_sentiment import sentiment_llm_tagging
+from util_competitor import competitor_llm_tagging
+from util_7P import P7_llm_tagging
 
 
 async def __wait_for_message(cli: Client, message, payload):
@@ -16,9 +16,9 @@ async def __wait_for_message(cli: Client, message, payload):
         _cost_competitor = ""
         _cost_7p = ""
         _total_cost_d5 = ""
-        [_sentiment, _cost_sentiment] = sentiment_llm(payload["text"])
-        [_competitor, _cost_competitor] = competitor_llm(payload["text"])
-        [_7p, _cost_7p] = P7_llm(payload["text"])
+        [_sentiment, _cost_sentiment] = sentiment_llm_tagging(payload["text"])
+        [_competitor, _cost_competitor] = competitor_llm_tagging(payload["text"])
+        [_7p, _cost_7p] = P7_llm_tagging(payload["text"])
         payload["sentiment"] = _sentiment
         payload["pronouns"] = _competitor
         payload["noun"] = _7p
@@ -47,7 +47,6 @@ async def onconnected(cli: Client):
         print(result)
         # await cli.QueueMessage(queuename, {"text": "Opfølgning på målinger i de andre butikker. Obs. på at der altid er lidt mere og obs på at det er efterårsferie, hvis det har noget at sige for omsætningen. Desuden obs på, at det er meningen, det skal opbevares i længere tid."})
         # await cli.QueueMessage(queuename, {"text": "Ved ikke om de har noget organisk affald... på deres hovedkontor har de et køkken, men det er en ekstern operatør der driver det... det er Michael Kjær fra driften, et fælles køkken med andre virksomheder.. Ring til ham om det. NCC bestemmer desuden selv om de skal have vores projekt med i loopet på dgnb point i byggeriet... i deres koncept udvikling...; De er ved at definere det og vi kan vende retur til Martin i Januar, hvor han ved hvem vi skal have møde med om det."})
-
     except Exception as e:
         print(e)
     # cli.Close()
