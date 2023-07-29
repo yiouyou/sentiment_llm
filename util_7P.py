@@ -1,137 +1,137 @@
 ##### v0
-import pprint as pp
-key = "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"
-N_batch = 3
+# import pprint as pp
+# key = "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"
+# N_batch = 3
 
-def call_openai(chain, _content, _example):
-    from langchain.callbacks import get_openai_callback
-    _re = ""
-    _tokens = 0
-    _cost = 0
-    _log = ""
-    with get_openai_callback() as cb:
-        _re = chain.run(_content=_content, _example=_example)
-        _tokens = cb.total_tokens
-        _cost = cb.total_cost
-        _log += f"\nTokens: {cb.total_tokens} = (Prompt {cb.prompt_tokens} + Completion {cb.completion_tokens})\n"
-        _cost_str = format(cb.total_cost, ".5f")
-        _log += f"Cost: ${_cost_str}\n\n"
-    # print(_re)
-    return [_re, _tokens, _cost, _log]
+# def call_openai(chain, _content, _example):
+#     from langchain.callbacks import get_openai_callback
+#     _re = ""
+#     _tokens = 0
+#     _cost = 0
+#     _log = ""
+#     with get_openai_callback() as cb:
+#         _re = chain.run(_content=_content, _example=_example)
+#         _tokens = cb.total_tokens
+#         _cost = cb.total_cost
+#         _log += f"\nTokens: {cb.total_tokens} = (Prompt {cb.prompt_tokens} + Completion {cb.completion_tokens})\n"
+#         _cost_str = format(cb.total_cost, ".5f")
+#         _log += f"Cost: ${_cost_str}\n\n"
+#     # print(_re)
+#     return [_re, _tokens, _cost, _log]
 
-def split_note_to_sentences(txt_lines):
-    ##### split note to sentences
-    _sentences = []
-    for i in txt_lines:
-        i_li = i.strip()
-        if i_li:
-            for j in i_li.split(". "):
-                jj = ""
-                if j[-1] == '.':
-                    jj = j
-                else:
-                    jj = j+"."
-                _sentences.append(jj)
-    return _sentences
+# def split_note_to_sentences(txt_lines):
+#     ##### split note to sentences
+#     _sentences = []
+#     for i in txt_lines:
+#         i_li = i.strip()
+#         if i_li:
+#             for j in i_li.split(". "):
+#                 jj = ""
+#                 if j[-1] == '.':
+#                     jj = j
+#                 else:
+#                     jj = j+"."
+#                 _sentences.append(jj)
+#     return _sentences
 
-def P7_openai(key, txt_lines, N_batch):
-    import os
-    import re
-    from langchain import OpenAI, PromptTemplate, LLMChain
-    _log = ""
-    _7P_str = ""
-    _total_cost = 0
-    ##### set OpenAI API Key and prompt
-    os.environ["OPENAI_API_KEY"] = key
-    llm = OpenAI(temperature=0)
-    template = """
-Ignore previous instructions. As a marketing strategy analyst, your task is to identify and extract the 7Ps from each customer comment using nouns, according to the 7Ps Marketing Mix.
+# def P7_openai(key, txt_lines, N_batch):
+#     import os
+#     import re
+#     from langchain import OpenAI, PromptTemplate, LLMChain
+#     _log = ""
+#     _7P_str = ""
+#     _total_cost = 0
+#     ##### set OpenAI API Key and prompt
+#     os.environ["OPENAI_API_KEY"] = key
+#     llm = OpenAI(temperature=0)
+#     template = """
+# Ignore previous instructions. As a marketing strategy analyst, your task is to identify and extract the 7Ps from each customer comment using nouns, according to the 7Ps Marketing Mix.
 
-Below are some examples of 7Ps analysis for some customer comments in csv format, where the customer's comments are enclosed in double quotes, and after the comma is the 7Ps analysis results:
-{_example}
+# Below are some examples of 7Ps analysis for some customer comments in csv format, where the customer's comments are enclosed in double quotes, and after the comma is the 7Ps analysis results:
+# {_example}
 
-The customer comments that require marketing strategy analysis are as follows:
-{_content}
+# The customer comments that require marketing strategy analysis are as follows:
+# {_content}
 
-For each comment, identify and extract relative nouns of 7Ps from and only from the comment. Output the analysis result of each comment in JSON format in one line, with the 7Ps as the main key and the corresponding nouns as the values. The order of the main key is: Product, Price, Place, Promotion, People, Process, Physical evidence.
+# For each comment, identify and extract relative nouns of 7Ps from and only from the comment. Output the analysis result of each comment in JSON format in one line, with the 7Ps as the main key and the corresponding nouns as the values. The order of the main key is: Product, Price, Place, Promotion, People, Process, Physical evidence.
 
-Please output the analysis results in English lowercase:
-"""
-    prompt = PromptTemplate(
-        input_variables=["_content", "_example"],
-        template=template,
-    )
-    ##### 随机取10个example
-    import random
-    with open("examples_7P.txt", "r", encoding="utf-8") as ef:
-        _example = "".join(random.sample(ef.readlines(), 30))
-    ##### LLMChain
-    chain = LLMChain(llm=llm, prompt=prompt)
-    ##### split note to sentences
-    _sentences = split_note_to_sentences(txt_lines)
-    ##### call OpenAI API with _content
-    all_re = ""
-    for i in range(0, len(_sentences)):
-        if i % N_batch == 0:
-            batch = _sentences[i:i+N_batch]
-            # print(batch)
-            _content = ""
-            n = int(i / N_batch)
-            for j in range(0, len(batch)):
-                _content = _content + f"{n*N_batch +j +1}) {batch[j]}\n"
-            _log += _content
-            # print(prompt.format(_content=_content, _example=_example))
-            [b_re, b_tokens, b_cost, b_log] = call_openai(chain, _content, _example)
-            _log += b_log
-            _total_cost += b_cost
-            all_re += b_re + "\n"
-            # print(b_re)
-    _total_cost_str = format(_total_cost, ".5f")
-    _7P_str = all_re.strip()
-    return [_log, _7P_str, _total_cost_str, _sentences]
+# Please output the analysis results in English lowercase:
+# """
+#     prompt = PromptTemplate(
+#         input_variables=["_content", "_example"],
+#         template=template,
+#     )
+#     ##### 随机取10个example
+#     import random
+#     with open("examples_7P.txt", "r", encoding="utf-8") as ef:
+#         _example = "".join(random.sample(ef.readlines(), 30))
+#     ##### LLMChain
+#     chain = LLMChain(llm=llm, prompt=prompt)
+#     ##### split note to sentences
+#     _sentences = split_note_to_sentences(txt_lines)
+#     ##### call OpenAI API with _content
+#     all_re = ""
+#     for i in range(0, len(_sentences)):
+#         if i % N_batch == 0:
+#             batch = _sentences[i:i+N_batch]
+#             # print(batch)
+#             _content = ""
+#             n = int(i / N_batch)
+#             for j in range(0, len(batch)):
+#                 _content = _content + f"{n*N_batch +j +1}) {batch[j]}\n"
+#             _log += _content
+#             # print(prompt.format(_content=_content, _example=_example))
+#             [b_re, b_tokens, b_cost, b_log] = call_openai(chain, _content, _example)
+#             _log += b_log
+#             _total_cost += b_cost
+#             all_re += b_re + "\n"
+#             # print(b_re)
+#     _total_cost_str = format(_total_cost, ".5f")
+#     _7P_str = all_re.strip()
+#     return [_log, _7P_str, _total_cost_str, _sentences]
 
-def parse_7P_str(_str, _sentences):
-    import re
-    import json
-    _re = []
-    _li = _str.split("\n")
-    for i in _li:
-        if i:
-            # print(i)
-            _1 = i.split(" {")
-            _i = "{" + _1[1]
-            # print(f"_i: {_i}")
-            _re.append(_i)
-    for i in range(len(_sentences)):
-        # print(f"\n{i}, {_sentences[i]}")
-        _i_json = json.loads(_re[i])
-        # print(type(_i_json), _i_json)
-        for j in _i_json:
-            if _i_json[j].lower() not in _sentences[i].lower():
-                # print(">>>", _i_json[j])
-                _i_json[j] = ''
-            if _i_json[j].lower() == 'none':
-                _i_json[j] = ''
-        _re[i] = json.dumps(_i_json, ensure_ascii=False)
-        # print(type(_re[i]), _re[i], "\n")
-    _re_str = '[' + ', '.join(_re) + ']'
-    return _re_str
+# def parse_7P_str(_str, _sentences):
+#     import re
+#     import json
+#     _re = []
+#     _li = _str.split("\n")
+#     for i in _li:
+#         if i:
+#             # print(i)
+#             _1 = i.split(" {")
+#             _i = "{" + _1[1]
+#             # print(f"_i: {_i}")
+#             _re.append(_i)
+#     for i in range(len(_sentences)):
+#         # print(f"\n{i}, {_sentences[i]}")
+#         _i_json = json.loads(_re[i])
+#         # print(type(_i_json), _i_json)
+#         for j in _i_json:
+#             if _i_json[j].lower() not in _sentences[i].lower():
+#                 # print(">>>", _i_json[j])
+#                 _i_json[j] = ''
+#             if _i_json[j].lower() == 'none':
+#                 _i_json[j] = ''
+#         _re[i] = json.dumps(_i_json, ensure_ascii=False)
+#         # print(type(_re[i]), _re[i], "\n")
+#     _re_str = '[' + ', '.join(_re) + ']'
+#     return _re_str
 
-def P7_llm(_txt):
-    global key
-    _log = ""
-    _7P_str = ""
-    _total_cost = 0
-    txt_lines = _txt.split("\n")
-    [_log, _7P_str, _total_cost_str, _sentences] = P7_openai(key, txt_lines, N_batch)
-    # print(_log)
-    # print(_7P_str)
-    import ast
-    _7P_str = parse_7P_str(_7P_str, _sentences)
-    # print(_7P_str)
-    _7P = ast.literal_eval(_7P_str)
-    # print(type(_7P), _7P)
-    return [_7P, _total_cost_str]
+# def P7_llm(_txt):
+#     global key
+#     _log = ""
+#     _7P_str = ""
+#     _total_cost = 0
+#     txt_lines = _txt.split("\n")
+#     [_log, _7P_str, _total_cost_str, _sentences] = P7_openai(key, txt_lines, N_batch)
+#     # print(_log)
+#     # print(_7P_str)
+#     import ast
+#     _7P_str = parse_7P_str(_7P_str, _sentences)
+#     # print(_7P_str)
+#     _7P = ast.literal_eval(_7P_str)
+#     # print(type(_7P), _7P)
+#     return [_7P, _total_cost_str]
 
 
 
@@ -172,6 +172,11 @@ Below are some examples of 7Ps analysis for customer comments in csv format, whe
 "Jan Milling skriver i mail 28 juni at han skal forhandle renovation i oktober og omtaler vores "fine materiale".", {"product":"renovation", "price":"", "place":"", "promotion":"omtaler", "people":"", "process":"", "physical evidence":""}
 "Der har været Opslag på Linked In af Laust omkring affaldssortering og vi talte om at tage vores dialog videre.", {"product":"affaldssortering", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
 "Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"Er ved at få udvidet butik og har mange kasser stående, efter uge 40 kunne det være interessant, da de åbner en del flere kvadratmeter.", {"product":"kasser", "price":"", "place":"butik", "promotion":"", "people":"", "processes":"", "physical evidence":""}
+"hørkjoler med markup 4-6", {"product":"hørkjoler", "price":"markup", "place":"", "promotion":"", "people":"", "processes":"", "physical evidence":""}
+"Ja, måske, men det kommer an på priser og hvilken kvalitet og hvilket mindste køb han kan lave.", {"product":"kvalitet", "price":"priser, mindste køb", "place":"", "promotion":"", "people":"", "processes":"", "physical evidence":""}
+"hans brand er et mærke som består af klassiske designs, som alt sammen produceres i Italien, økologisk bomuld etc.", {"product":"designs, bomuld, økologisk", "price":"", "place":"Italien", "promotion":"brand", "people":"", "processes":"produceres", "physical evidence":""}
+"Jeg bliver i branchen, han arbejder som konsulent for Pasform for Zizzi i Billund og Sandgaard i Ikast dels for at styre deres&nbsp; Har en online shop til store piger med, Bambus, polyamid, viskose.", {"product":"online shop, Bambus, polyamid, viskose", "price":"", "place":"", "promotion":"", "people":"konsulent, store piger", "processes":"", "physical evidence":""}
 """,
             },
             "Price": {
@@ -181,6 +186,9 @@ According to the 7Ps Marketing Mix, identify and extract the 'Price' of 7Ps usin
 
 Below are some examples of 7Ps analysis for some customer comments in csv format, where the customer's comments are enclosed in double quotes, and after the comma is the 7Ps analysis results:
 "Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"hørkjoler med markup 4-6", {"product":"hørkjoler", "price":"markup", "place":"", "promotion":"", "people":"", "processes":"", "physical evidence":""}
+"Helle, fordi vi skal ikke investere mere i noget med de salgstider de har.", {"product":"", "price":"investere", "place":"", "promotion":"", "people":"", "processes":"salgstider", "physical evidence":""}
+"Ja, måske, men det kommer an på priser og hvilken kvalitet og hvilket mindste køb han kan lave.", {"product":"kvalitet", "price":"priser, mindste køb", "place":"", "promotion":"", "people":"", "processes":"", "physical evidence":""}
 """,
             },
             "Place": {
@@ -192,6 +200,12 @@ Below are some examples of 7Ps analysis for some customer comments in csv format
 "er en del af en kæde så det er dem jeg skal have fat i", {"product":"", "price":"", "place":"kæde", "promotion":"", "people":"", "process":"", "physical evidence":""}
 "vil gerne høre lidt mere om det, et højaktuelt emne og hvad der er på markedet, omvendt det bekymrer ham at give 3.", {"product":"", "price":"", "place":"markedet", "promotion":"", "people":"", "process":"", "physical evidence":""}
 "Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"Er ved at få udvidet butik og har mange kasser stående, efter uge 40 kunne det være interessant, da de åbner en del flere kvadratmeter.", {"product":"kasser", "price":"", "place":"butik", "promotion":"", "people":"", "processes":"", "physical evidence":""}
+"De har 2 butikker og en webshop, det de tidligere de har undersøgt var at man skulle bestille 100 styk, og det skal man ikke her, det synes hun var godt.", {"product":"", "price":"", "place":"butikker", "promotion":"", "people":"", "processes":"styk", "physical evidence":""}
+"Vi er en multibrand store, han tror ikke det er aktuelt, han tror ikke de kan sælge noget med deres Cadovius brand i, folk skal kunne kende det so mde har på.",{"product":"", "price":"", "place":"store", "promotion":"multibrand", "people":"", "processes":"", "physical evidence":""}
+"hans brand er et mærke som består af klassiske designs, som alt sammen produceres i Italien, økologisk bomuld etc.", {"product":"designs, bomuld, økologisk", "price":"", "place":"Italien", "promotion":"brand", "people":"", "processes":"produceres", "physical evidence":""}
+"Hvor får vi produceret henne? Send en mail, hvem har vi i Aalborg.", {"product":"", "price":"", "place":"Aalborg", "promotion":"", "people":"", "processes":"produceret", "physical evidence":""}
+"Nejtak Er medlem af en indkøbsforening, mister og Min tøjmand, som han faktisk er bestyrelsesformand for.", {"product":"", "price":"", "place":"indkøbsforening", "promotion":"", "people":"bestyrelsesformand", "processes":"", "physical evidence":""}
 """,
             },
             "Promotion": {
@@ -203,6 +217,8 @@ Below are some examples of 7Ps analysis for some customer comments in csv format
 "Christian har skrevet at det ikke var aktuelt lige nu med hjemmesiden til udlejning, da der var kø, så der behøvede ikke PR", {"product":"hjemmesiden", "price":"", "place":"", "promotion":"PR", "people":"", "process":"kø", "physical evidence":""}
 "Jan Milling skriver i mail 28 juni at han skal forhandle renovation i oktober og omtaler vores "fine materiale".", {"product":"renovation", "price":"", "place":"", "promotion":"omtaler", "people":"", "process":"", "physical evidence":""}
 "Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"Vi er en multibrand store, han tror ikke det er aktuelt, han tror ikke de kan sælge noget med deres Cadovius brand i, folk skal kunne kende det so mde har på.",{"product":"", "price":"", "place":"store", "promotion":"multibrand", "people":"", "processes":"", "physical evidence":""}
+"hans brand er et mærke som består af klassiske designs, som alt sammen produceres i Italien, økologisk bomuld etc.", {"product":"designs, bomuld, økologisk", "price":"", "place":"Italien", "promotion":"brand", "people":"", "processes":"produceres", "physical evidence":""}
 """,
             },
             "People": {
@@ -215,6 +231,10 @@ Below are some examples of 7Ps analysis for some customer comments in csv format
 "Har givet den videre til Jan, som er ejer.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
 "Bad MM ringe tilbage eller sende tid for muligt møde på sms.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}"Helle Pedersen gik direkte på tlfsvarer.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
 "Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"Hun står med en kunde.", {"product":"", "price":"", "place":"", "promotion":"", "people":"kunde", "processes":"", "physical evidence":""}
+"chefen er på ferie, prøv om 14 dage.", {"product":"", "price":"", "place":"", "promotion":"", "people":"chefen", "processes":"", "physical evidence":""}
+"Nejtak Er medlem af en indkøbsforening, mister og Min tøjmand, som han faktisk er bestyrelsesformand for.", {"product":"", "price":"", "place":"indkøbsforening", "promotion":"", "people":"bestyrelsesformand", "processes":"", "physical evidence":""}
+"Jeg bliver i branchen, han arbejder som konsulent for Pasform for Zizzi i Billund og Sandgaard i Ikast dels for at styre deres&nbsp; Har en online shop til store piger med, Bambus, polyamid, viskose.", {"product":"online shop, Bambus, polyamid, viskose", "price":"", "place":"", "promotion":"", "people":"konsulent, store piger", "processes":"", "physical evidence":""}
 """,
             },
             "Process": {
@@ -226,6 +246,11 @@ Below are some examples of 7Ps analysis for some customer comments in csv format
 "Har ringet ind til deres fysioterapi tidsbestilling, men det er outsourcet til Meyers køkkener, så det er nok dem jeg skal tale med", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"outsourcet", "physical evidence":""}
 "Thorballe var positiv, mente tilbuddet var som det skulle være, og det hele er kun stoppet grundet outsourcing, som de ikke kendte til.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"outsourcing", "physical evidence":""}
 "Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"De har 2 butikker og en webshop, det de tidligere de har undersøgt var at man skulle bestille 100 styk, og det skal man ikke her, det synes hun var godt.", {"product":"", "price":"", "place":"butikker", "promotion":"", "people":"", "processes":"styk", "physical evidence":""}
+"Helle, fordi vi skal ikke investere mere i noget med de salgstider de har.", {"product":"", "price":"investere", "place":"", "promotion":"", "people":"", "processes":"salgstider", "physical evidence":""}
+"Hvor får vi produceret henne? Send en mail, hvem har vi i Aalborg.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "processes":"produceret", "physical evidence":""}
+"hans brand er et mærke som består af klassiske designs, som alt sammen produceres i Italien, økologisk bomuld etc.", {"product":"designs, bomuld, økologisk", "price":"", "place":"Italien", "promotion":"brand", "people":"", "processes":"produceres", "physical evidence":""}
+"Hvor får vi produceret henne? Send en mail, hvem har vi i Aalborg.", {"product":"", "price":"", "place":"Aalborg", "promotion":"", "people":"", "processes":"produceret", "physical evidence":""}
 """,
             },
             "Physical evidence": {
