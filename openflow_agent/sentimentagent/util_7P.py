@@ -172,6 +172,11 @@ Below are some examples of 7Ps analysis for customer comments in csv format, whe
 "Jan Milling skriver i mail 28 juni at han skal forhandle renovation i oktober og omtaler vores "fine materiale".", {"product":"renovation", "price":"", "place":"", "promotion":"omtaler", "people":"", "process":"", "physical evidence":""}
 "Der har været Opslag på Linked In af Laust omkring affaldssortering og vi talte om at tage vores dialog videre.", {"product":"affaldssortering", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
 "Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"Er ved at få udvidet butik og har mange kasser stående, efter uge 40 kunne det være interessant, da de åbner en del flere kvadratmeter.", {"product":"kasser", "price":"", "place":"butik", "promotion":"", "people":"", "processes":"", "physical evidence":""}
+"hørkjoler med markup 4-6", {"product":"hørkjoler", "price":"markup", "place":"", "promotion":"", "people":"", "processes":"", "physical evidence":""}
+"Ja, måske, men det kommer an på priser og hvilken kvalitet og hvilket mindste køb han kan lave.", {"product":"kvalitet", "price":"priser, mindste køb", "place":"", "promotion":"", "people":"", "processes":"", "physical evidence":""}
+"hans brand er et mærke som består af klassiske designs, som alt sammen produceres i Italien, økologisk bomuld etc.", {"product":"designs, bomuld, økologisk", "price":"", "place":"Italien", "promotion":"brand", "people":"", "processes":"produceres", "physical evidence":""}
+"Jeg bliver i branchen, han arbejder som konsulent for Pasform for Zizzi i Billund og Sandgaard i Ikast dels for at styre deres&nbsp; Har en online shop til store piger med, Bambus, polyamid, viskose.", {"product":"online shop, Bambus, polyamid, viskose", "price":"", "place":"", "promotion":"", "people":"konsulent, store piger", "processes":"", "physical evidence":""}
 """,
             },
             "Price": {
@@ -181,6 +186,9 @@ According to the 7Ps Marketing Mix, identify and extract the 'Price' of 7Ps usin
 
 Below are some examples of 7Ps analysis for some customer comments in csv format, where the customer's comments are enclosed in double quotes, and after the comma is the 7Ps analysis results:
 "Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"hørkjoler med markup 4-6", {"product":"hørkjoler", "price":"markup", "place":"", "promotion":"", "people":"", "processes":"", "physical evidence":""}
+"Helle, fordi vi skal ikke investere mere i noget med de salgstider de har.", {"product":"", "price":"investere", "place":"", "promotion":"", "people":"", "processes":"salgstider", "physical evidence":""}
+"Ja, måske, men det kommer an på priser og hvilken kvalitet og hvilket mindste køb han kan lave.", {"product":"kvalitet", "price":"priser, mindste køb", "place":"", "promotion":"", "people":"", "processes":"", "physical evidence":""}
 """,
             },
             "Place": {
@@ -192,6 +200,12 @@ Below are some examples of 7Ps analysis for some customer comments in csv format
 "er en del af en kæde så det er dem jeg skal have fat i", {"product":"", "price":"", "place":"kæde", "promotion":"", "people":"", "process":"", "physical evidence":""}
 "vil gerne høre lidt mere om det, et højaktuelt emne og hvad der er på markedet, omvendt det bekymrer ham at give 3.", {"product":"", "price":"", "place":"markedet", "promotion":"", "people":"", "process":"", "physical evidence":""}
 "Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"Er ved at få udvidet butik og har mange kasser stående, efter uge 40 kunne det være interessant, da de åbner en del flere kvadratmeter.", {"product":"kasser", "price":"", "place":"butik", "promotion":"", "people":"", "processes":"", "physical evidence":""}
+"De har 2 butikker og en webshop, det de tidligere de har undersøgt var at man skulle bestille 100 styk, og det skal man ikke her, det synes hun var godt.", {"product":"", "price":"", "place":"butikker", "promotion":"", "people":"", "processes":"styk", "physical evidence":""}
+"Vi er en multibrand store, han tror ikke det er aktuelt, han tror ikke de kan sælge noget med deres Cadovius brand i, folk skal kunne kende det so mde har på.",{"product":"", "price":"", "place":"store", "promotion":"multibrand", "people":"", "processes":"", "physical evidence":""}
+"hans brand er et mærke som består af klassiske designs, som alt sammen produceres i Italien, økologisk bomuld etc.", {"product":"designs, bomuld, økologisk", "price":"", "place":"Italien", "promotion":"brand", "people":"", "processes":"produceres", "physical evidence":""}
+"Hvor får vi produceret henne? Send en mail, hvem har vi i Aalborg.", {"product":"", "price":"", "place":"Aalborg", "promotion":"", "people":"", "processes":"produceret", "physical evidence":""}
+"Nejtak Er medlem af en indkøbsforening, mister og Min tøjmand, som han faktisk er bestyrelsesformand for.", {"product":"", "price":"", "place":"indkøbsforening", "promotion":"", "people":"bestyrelsesformand", "processes":"", "physical evidence":""}
 """,
             },
             "Promotion": {
@@ -203,6 +217,8 @@ Below are some examples of 7Ps analysis for some customer comments in csv format
 "Christian har skrevet at det ikke var aktuelt lige nu med hjemmesiden til udlejning, da der var kø, så der behøvede ikke PR", {"product":"hjemmesiden", "price":"", "place":"", "promotion":"PR", "people":"", "process":"kø", "physical evidence":""}
 "Jan Milling skriver i mail 28 juni at han skal forhandle renovation i oktober og omtaler vores "fine materiale".", {"product":"renovation", "price":"", "place":"", "promotion":"omtaler", "people":"", "process":"", "physical evidence":""}
 "Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"Vi er en multibrand store, han tror ikke det er aktuelt, han tror ikke de kan sælge noget med deres Cadovius brand i, folk skal kunne kende det so mde har på.",{"product":"", "price":"", "place":"store", "promotion":"multibrand", "people":"", "processes":"", "physical evidence":""}
+"hans brand er et mærke som består af klassiske designs, som alt sammen produceres i Italien, økologisk bomuld etc.", {"product":"designs, bomuld, økologisk", "price":"", "place":"Italien", "promotion":"brand", "people":"", "processes":"produceres", "physical evidence":""}
 """,
             },
             "People": {
@@ -215,6 +231,10 @@ Below are some examples of 7Ps analysis for some customer comments in csv format
 "Har givet den videre til Jan, som er ejer.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
 "Bad MM ringe tilbage eller sende tid for muligt møde på sms.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}"Helle Pedersen gik direkte på tlfsvarer.", {"product":"", "price":"", "place":"", "promotion":"",  "people":"", "process":"", "physical evidence":""}
 "Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"Hun står med en kunde.", {"product":"", "price":"", "place":"", "promotion":"", "people":"kunde", "processes":"", "physical evidence":""}
+"chefen er på ferie, prøv om 14 dage.", {"product":"", "price":"", "place":"", "promotion":"", "people":"chefen", "processes":"", "physical evidence":""}
+"Nejtak Er medlem af en indkøbsforening, mister og Min tøjmand, som han faktisk er bestyrelsesformand for.", {"product":"", "price":"", "place":"indkøbsforening", "promotion":"", "people":"bestyrelsesformand", "processes":"", "physical evidence":""}
+"Jeg bliver i branchen, han arbejder som konsulent for Pasform for Zizzi i Billund og Sandgaard i Ikast dels for at styre deres&nbsp; Har en online shop til store piger med, Bambus, polyamid, viskose.", {"product":"online shop, Bambus, polyamid, viskose", "price":"", "place":"", "promotion":"", "people":"konsulent, store piger", "processes":"", "physical evidence":""}
 """,
             },
             "Process": {
@@ -226,6 +246,11 @@ Below are some examples of 7Ps analysis for some customer comments in csv format
 "Har ringet ind til deres fysioterapi tidsbestilling, men det er outsourcet til Meyers køkkener, så det er nok dem jeg skal tale med", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"outsourcet", "physical evidence":""}
 "Thorballe var positiv, mente tilbuddet var som det skulle være, og det hele er kun stoppet grundet outsourcing, som de ikke kendte til.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"outsourcing", "physical evidence":""}
 "Vi skal tale med Mogens Bang om den her.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "process":"", "physical evidence":""}
+"De har 2 butikker og en webshop, det de tidligere de har undersøgt var at man skulle bestille 100 styk, og det skal man ikke her, det synes hun var godt.", {"product":"", "price":"", "place":"butikker", "promotion":"", "people":"", "processes":"styk", "physical evidence":""}
+"Helle, fordi vi skal ikke investere mere i noget med de salgstider de har.", {"product":"", "price":"investere", "place":"", "promotion":"", "people":"", "processes":"salgstider", "physical evidence":""}
+"Hvor får vi produceret henne? Send en mail, hvem har vi i Aalborg.", {"product":"", "price":"", "place":"", "promotion":"", "people":"", "processes":"produceret", "physical evidence":""}
+"hans brand er et mærke som består af klassiske designs, som alt sammen produceres i Italien, økologisk bomuld etc.", {"product":"designs, bomuld, økologisk", "price":"", "place":"Italien", "promotion":"brand", "people":"", "processes":"produceres", "physical evidence":""}
+"Hvor får vi produceret henne? Send en mail, hvem har vi i Aalborg.", {"product":"", "price":"", "place":"Aalborg", "promotion":"", "people":"", "processes":"produceret", "physical evidence":""}
 """,
             },
             "Physical evidence": {
