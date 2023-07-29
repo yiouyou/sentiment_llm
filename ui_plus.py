@@ -135,7 +135,7 @@ with gr.Blocks(title = "Customer Sentiment Plus Analysis by LLM") as demo:
             with gr.Column(scale=2):
                 upload_box = gr.File(label="Upload Single TXT File", file_count="single", type="file", file_types=['.txt'], interactive=True)
             with gr.Column(scale=3):
-                input_content = gr.Textbox(label="TXT File Content", placeholder="TXT File Content", lines=10, interactive=True)
+                input_content = gr.Textbox(label="TXT File Content", placeholder="TXT File Content", lines=10, interactive=False)
                 upload_box.change(read_file, inputs=[upload_box], outputs=[input_content])
         with gr.Row():
             start_btn = gr.Button("Start Analysis", variant="secondary")
