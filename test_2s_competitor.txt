@@ -1,1 +1,0 @@
-[{'competitor': ''}, {'competitor': ''}, {'competitor': ''}, {'competitor': ''}, {'competitor': ''}, {'competitor': ''}, {'competitor': 'hans brand'}, {'competitor': ''}, {'competitor': ''}, {'competitor': ''}, {'competitor': ''}, {'competitor': ''}, {'competitor': ''}, {'competitor': ''}, {'competitor': ''}, {'competitor': ''}, {'competitor': ''}]
