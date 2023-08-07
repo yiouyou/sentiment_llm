@@ -224,7 +224,7 @@ Below are some examples of 7Ps analysis for some customer comments in csv format
             "People": {
                 "type": "string",
                 "description": """
-According to the 7Ps Marketing Mix, identify and extract the 'People' of 7Ps using nouns. Remeber it's the job titles who are involved in creating, delivering, and supporting our product or service, not the names of specific individuals. Focus only on job titles related to the company's business. DO NOT extract the names of specific individuals.
+According to the 7Ps Marketing Mix, identify and extract the job titles or positions related to the 'People' component. Focus on the roles involved in creating, delivering, and supporting the product or service, and exclude the specific names of individuals.
 
 Below are some examples of 7Ps analysis for some customer comments in csv format, where the customer's comments are enclosed in double quotes, and after the comma is the 7Ps analysis results:
 "Ikke inde i Niras, han er facility mand", {"product":"", "price":"", "place":"", "promotion":"", "people":"facility mand", "process":"", "physical evidence":""}
@@ -235,6 +235,8 @@ Below are some examples of 7Ps analysis for some customer comments in csv format
 "chefen er på ferie, prøv om 14 dage.", {"product":"", "price":"", "place":"", "promotion":"", "people":"chefen", "processes":"", "physical evidence":""}
 "Nejtak Er medlem af en indkøbsforening, mister og Min tøjmand, som han faktisk er bestyrelsesformand for.", {"product":"", "price":"", "place":"indkøbsforening", "promotion":"", "people":"bestyrelsesformand", "processes":"", "physical evidence":""}
 "Jeg bliver i branchen, han arbejder som konsulent for Pasform for Zizzi i Billund og Sandgaard i Ikast dels for at styre deres&nbsp; Har en online shop til store piger med, Bambus, polyamid, viskose.", {"product":"online shop, Bambus, polyamid, viskose", "price":"", "place":"", "promotion":"", "people":"konsulent, store piger", "processes":"", "physical evidence":""}
+
+Remember, please DO NOT extract any individual human names and extract only the job titles or positions. If no job titles or positions are found, the value of the key "people" in result should be an empty string.
 """,
             },
             "Process": {
