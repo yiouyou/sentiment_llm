@@ -47,3 +47,37 @@
 "Men hvis den ikke blev godkendt i år, så bliver den måske næste år.", positive
 "Den ligger fortsat i ansøgningerne, en ansøgning som de har levet, og stadig er meget positiv for.", positive
 "Det er bare deres systems gang.", neutral
+"45 ton madaffald", neutral
+"De er godt presset lige nu og skal bare sælge de varer de har", negative
+"De har valgt, at de flytter de eksisterende møbler med i den nye lokaler til at starte med", negative
+"Der er 10! Placering af kværn i køkken virker mulig og rør trækkes over det forsænkdede loft ud til plads, hvor daka spande står idag", positive
+"Det er ikke fordi, at de ikke vil have nye møbler i forbindelse med flytningen, men de har ikke haft tid til at gå træffe den endelige beslutning omkring de nye møbler", positive
+"Hen mener den er ISS som har projektet igen", neutral
+"Henrik, vi er medlem af en indkøbsforening og de får deres egen producerede varer den vej igennem", negative
+"Hun tog fat i vores køkken, ved ikke hvad svaret var fra dem, den døde måske hos hende", neutral
+"Hun vil lige se på Pitaya hjemmesidem, der er alt tøj fra os", positive
+"Hvad er Mads´s baggrund for at kunne pdorudcere? send mail til ks@toftshop", neutral
+"I møde til middag", neutral
+"I møde, men Omstilling mener, Jens B er ledig after lunch", neutral
+"Intet madaffald siger Charlotte", negative
+"Jeg har forsøgt ham og lagt besked, prøver igen", neutral
+"Kværn leveres fra Tyskland", neutral
+"Lars oplyste, at Susanne sidder med beslutningen, og i forhold til det nye OUH oplyste han, at intet var besluttet, men han kunne se at de gør plads til Køkken i de nyeste tegninger, muligvis en identifikation eller blot en dør på klem", positive
+"Overhovedet, har ingen madaffald, da de ingen kantineordning har", negative
+"Pris 303", neutral
+"Projektet er overtaget af 'Lars' 30522559som er projektleder", neutral
+"Projektet er stadig aktivt omkring kværn, men det er blevet en del af et større projekt og trækker derfor ud", positive
+"Projektet er udskudt til næste år, men stadig i gang", positive
+"Ring til køkken, 27798843", neutral
+"Skal først bruge møbler til juli, har aftalt at jeg sender min kontakt oplysninger", positive
+"Sofie, Lyngby:Disse beslutninger træffes ikke på hotel niveau, men kontakt Birgitte Nørregaard i HQ", neutral
+"Vil gerne have et møde 22/8/23 kl", positive
+"Vores tøj laves på egne fabrikker i Tyrkiet, han regner ikke med at vi kan være med på kvaliteten, desuden er de forpligtet til at bruge deres fabrikker", negative
+"aftalt møde i uge 28", positive
+"en start pris, på en t-shirt spændene er tilbage fra møde den 3 kl 15 send mail", positive
+"han ringede tilbagede lavede selv deres tøj", negative
+"havde lukket sin tøj butik", negative
+"hotellet", neutral
+"kan vi sælge en t-shirt til 100 kr med tryk på vil se noget først, tag nogle vareprøver med han er i butikken hverdag så vi skal bare stikke hovedet ind vi skal ikke køre for det, så det skal være hvis vi skal der ned alligevel", positive
+"projektleder fra ISS skal køre hele husets affaldsprojekt samtidig, så han forventer et efterårs projekt", positive
+"status på projektet?", neutral

@@ -165,11 +165,32 @@ def sentiment_openai_tagging(txt_lines):
                 "type": "string",
                 "enum": ["positive", "neutral", "negative"],
                 "description": """
-The sentiment classification used to judge whether customers have a positive attitude towards the products we are trying to sell to them. In addition to the general sentiment analysis principles, the following rules must be followed: 1) If the main content of the comment involves numbers (phone numbers, dates, addresses, web addresses, etc.), it is neutral; 2) If the main content of the comment is dominated by interjections, modal particles, nouns or adjectives with no obvious emotional meaning, it is neutral; 3) If the customer is willing to communicate or agrees to our call back, it's positive; 4) If the customer wants to talk to technicians, it's positive; 5) If the customer is likely to purchase in the future, it's positive; 6) If the customer is talking about invoiced, delivered, and billing, it's positive; 7) If the customer is discussing personal schedule and activities, it is positive.
+The sentiment classification used to judge whether customers have a positive attitude towards the products we are trying to sell to them. In addition to the general sentiment analysis principles, the following rules must be followed: 
+1) If the main content of the comment involves numbers (phone numbers, dates, addresses, web addresses, etc.), it is neutral;
+2) If the main content of the comment is dominated by interjections, modal particles, nouns or adjectives with no obvious emotional meaning, it is neutral;
+3) If the customer doesn't need our products, it is negative;
+4) If the customer indicates having an existing channel or their own product, it is negative;
+5) If the customer says negatively that they do not have certain product, it is negative;
+6) If the customer says the store is closed, it is negative;
+7) If the customer shows willingness to communicate, agrees to a callback, seeks to talk to technicians, or seeks more information, it's positive;
+8) If the customer requests or talks about a meeting or asks us to do something for them, it's positive;
+9) If the customer is likely to purchase in the future, it's positive;
+10) If the customer is talking about invoiced, delivered, and billing, it's positive;
+11) If the customer is discussing personal schedule and activities, it is positive;
+12) If the customer discusses an ongoing or future project or or expresses interest in joining larger projects, it is positive;
+13) If the customer is willing to cooperate with our requirements, such as confirming the location or renovating the space of our product, etc., it is positive.
 
 Below are some negative and positive examples of sentiment analysis for customer comments in csv format, where the customer's comments are enclosed in double quotes, and after the comma is the sentiment classification of the comments:
 "Haven't chosen a system for Gødstrup, if it were to start before ex Herning, it would have to be the same system as it will be in Gødstrup.", negative
 "på interesse, tidligere udtrykt, at de ikke var interesseret grundet andre interessepunkter.", negative
+"Vores tøj laves på egne fabrikker i Tyrkiet, han regner ikke med at vi kan være med på kvaliteten, desuden er de forpligtet til at bruge deres fabrikker", negative
+"havde lukket sin tøj butik", negative
+"han ringede tilbagede lavede selv deres tøj", negative
+"Overhovedet, har ingen madaffald, da de ingen kantineordning har", negative
+"Intet madaffald siger Charlotte", negative
+"De er godt presset lige nu og skal bare sælge de varer de har", negative
+"Henrik, vi er medlem af en indkøbsforening og de får deres egen producerede varer den vej igennem", negative
+"De har valgt, at de flytter de eksisterende møbler med i den nye lokaler til at starte med", negative
 "We are in good shape if it turns out to be a grind.", positive
 "Note that we are happy to arrange a demonstration.", positive
 "Ok that I call and find out how it goes.", positive
@@ -191,6 +212,18 @@ indkøbes/faktureres og leveres ca.", positive
 "De var meget interesserede og fik materiale med hjem.", positive
 "Men hvis den ikke blev godkendt i år, så bliver den måske næste år.", positive
 "Den ligger fortsat i ansøgningerne, en ansøgning som de har levet, og stadig er meget positiv for.", positive
+"Projektet er udskudt til næste år, men stadig i gang", positive
+"projektleder fra ISS skal køre hele husets affaldsprojekt samtidig, så han forventer et efterårs projekt", positive
+"Projektet er stadig aktivt omkring kværn, men det er blevet en del af et større projekt og trækker derfor ud", positive
+"Der er 10! Placering af kværn i køkken virker mulig og rør trækkes over det forsænkdede loft ud til plads, hvor daka spande står idag", positive
+"Lars oplyste, at Susanne sidder med beslutningen, og i forhold til det nye OUH oplyste han, at intet var besluttet, men han kunne se at de gør plads til Køkken i de nyeste tegninger, muligvis en identifikation eller blot en dør på klem", positive
+"Hun vil lige se på Pitaya hjemmesidem, der er alt tøj fra os", positive
+"aftalt møde i uge 28", positive
+"Vil gerne have et møde 22/8/23 kl", positive
+"Skal først bruge møbler til juli, har aftalt at jeg sender min kontakt oplysninger", positive
+"Det er ikke fordi, at de ikke vil have nye møbler i forbindelse med flytningen, men de har ikke haft tid til at gå træffe den endelige beslutning omkring de nye møbler", positive
+"kan vi sælge en t-shirt til 100 kr med tryk på vil se noget først, tag nogle vareprøver med han er i butikken hverdag så vi skal bare stikke hovedet ind vi skal ikke køre for det, så det skal være hvis vi skal der ned alligevel", positive
+"en start pris, på en t-shirt spændene er tilbage fra møde den 3 kl 15 send mail", positive
 """,
             },
             "why": {
@@ -211,6 +244,7 @@ indkøbes/faktureres og leveres ca.", positive
     _sentences = []
     for i in txt_lines:
         i_li = i.strip()
+        i_li = i_li.replace("&nbsp; ", "").replace("&nbsp;", "").replace("<a href=\"mailto:", "")
         if i_li:
             for j in i_li.split(". "):
                 jj = ""
@@ -281,58 +315,91 @@ if __name__ == "__main__":
 #     print(type(_re), _re)
 #     print(type(_cost), _cost)
 
-    _txt = """Haven't chosen a system for Gødstrup, if it were to start before ex Herning, it would have to be the same system as it will be in Gødstrup.
-på interesse, tidligere udtrykt, at de ikke var interesseret grundet andre interessepunkter.
-We are in good shape if it turns out to be a grind.
-Note that we are happy to arrange a demonstration.
-Ok that I call and find out how it goes.
-Opfølgning på målinger i de andre butikker.
-på at der altid er lidt mere og obs på at det er efterårsferie, hvis det har noget at sige for omsætningen.
-Den i Bones kan tages retur efter 2 måneder, den anden er købt.
-indkøbes/faktureres og leveres ca.
-Møde med Richard og to teknikere.
-Meget positivt møde.
-Der skal fremsendes 3 tilbud: 1) Kværn i opvask, rørføring og tank i skakt og sugeledning ud til ydrevæg.
-2) Kværn i grøntrum, rørføring ved trappe og isoleret tank i hækken.
-3) Kværn i grøntrum, rørføring ved trappe og nedgravet tank under hækken.
-Fundet uge 46 Eva Ejlsskov, måske lederne 11.08.14 JJ De er interesseret i lejeløsning.?.
-Hej Kirsten Vi talte sammen først på året, og jeg kan fortælle, at vi nu har omkring 40 anlæg stående – disse er fordelt i hele landet, det nærmeste anlæg er hos Legoland i Billund, hvor det evt.
-Har I noget nyt med hensyn til ombygning i køkkenet ? Venlig Hilsen Jens Jeberg Biotrans Nordic Svendborgvej 243 DK – 5260 Odense SMob.
-15/8, hvor vi er i Århus alligevel.
-opfølgning på tilbud om leje og køb - sendt mail d.
-med opstart af SOSU Nord mødte jeg to damer, som var på inspirations tur det nye køkken på UCN.
-De var meget interesserede og fik materiale med hjem.
-Men hvis den ikke blev godkendt i år, så bliver den måske næste år.
-Den ligger fortsat i ansøgningerne, en ansøgning som de har levet, og stadig er meget positiv for.
-Hanne sits in the working group regarding Gødstrup, among other things, waste.
-Decision on standby.
-Order up from evaluating different systems.
-Our material is included.
-I also suggest talking to Ole Teglgård.
-Obs.
-Desuden obs på, at det er meningen, det skal opbevares i længere tid.
-.med en basic og en SLIM.
-Tank leveres asap Vi borer huller og trækker rør ind i bygningen Kværnen 1/4-15.
-Pt.
-samler de affaldet i kantinen på 4 sal, kører det i poser ned i affaldsrummet og tømmer dem i blå spande fra M.
-Larsen.
-Forsøger kontakt mhp.
-kan besigtiges.
-+45 22 15 25 09 Tel.
-+45 70 25 84 00 www.biotrans-nordic.com.
-Startet med linked in invitation til direktør.
-Ligger lige ved siden af Agrotech, måske de har været involveret.
-Satser på møde måske d.
-1/11.
-Ifm.
-Liselotte Kirk 25676514 og Lone Holm 51901534 fra LL Catering.
-Opfølgning på tilbud fra sidste år.
-Talte med Lars d.
-23/10 - og han sagde at den lå i køkkenets ansøgninger og at ikke længere kunne trykke den frem.
-Det er bare deres systems gang.
+#     _txt = """Haven't chosen a system for Gødstrup, if it were to start before ex Herning, it would have to be the same system as it will be in Gødstrup.
+# på interesse, tidligere udtrykt, at de ikke var interesseret grundet andre interessepunkter.
+# We are in good shape if it turns out to be a grind.
+# Note that we are happy to arrange a demonstration.
+# Ok that I call and find out how it goes.
+# Opfølgning på målinger i de andre butikker.
+# på at der altid er lidt mere og obs på at det er efterårsferie, hvis det har noget at sige for omsætningen.
+# Den i Bones kan tages retur efter 2 måneder, den anden er købt.
+# indkøbes/faktureres og leveres ca.
+# Møde med Richard og to teknikere.
+# Meget positivt møde.
+# Der skal fremsendes 3 tilbud: 1) Kværn i opvask, rørføring og tank i skakt og sugeledning ud til ydrevæg.
+# 2) Kværn i grøntrum, rørføring ved trappe og isoleret tank i hækken.
+# 3) Kværn i grøntrum, rørføring ved trappe og nedgravet tank under hækken.
+# Fundet uge 46 Eva Ejlsskov, måske lederne 11.08.14 JJ De er interesseret i lejeløsning.?.
+# Hej Kirsten Vi talte sammen først på året, og jeg kan fortælle, at vi nu har omkring 40 anlæg stående – disse er fordelt i hele landet, det nærmeste anlæg er hos Legoland i Billund, hvor det evt.
+# Har I noget nyt med hensyn til ombygning i køkkenet ? Venlig Hilsen Jens Jeberg Biotrans Nordic Svendborgvej 243 DK – 5260 Odense SMob.
+# 15/8, hvor vi er i Århus alligevel.
+# opfølgning på tilbud om leje og køb - sendt mail d.
+# med opstart af SOSU Nord mødte jeg to damer, som var på inspirations tur det nye køkken på UCN.
+# De var meget interesserede og fik materiale med hjem.
+# Men hvis den ikke blev godkendt i år, så bliver den måske næste år.
+# Den ligger fortsat i ansøgningerne, en ansøgning som de har levet, og stadig er meget positiv for.
+# Hanne sits in the working group regarding Gødstrup, among other things, waste.
+# Decision on standby.
+# Order up from evaluating different systems.
+# Our material is included.
+# I also suggest talking to Ole Teglgård.
+# Obs.
+# Desuden obs på, at det er meningen, det skal opbevares i længere tid.
+# .med en basic og en SLIM.
+# Tank leveres asap Vi borer huller og trækker rør ind i bygningen Kværnen 1/4-15.
+# Pt.
+# samler de affaldet i kantinen på 4 sal, kører det i poser ned i affaldsrummet og tømmer dem i blå spande fra M.
+# Larsen.
+# Forsøger kontakt mhp.
+# kan besigtiges.
+# +45 22 15 25 09 Tel.
+# +45 70 25 84 00 www.biotrans-nordic.com.
+# Startet med linked in invitation til direktør.
+# Ligger lige ved siden af Agrotech, måske de har været involveret.
+# Satser på møde måske d.
+# 1/11.
+# Ifm.
+# Liselotte Kirk 25676514 og Lone Holm 51901534 fra LL Catering.
+# Opfølgning på tilbud fra sidste år.
+# Talte med Lars d.
+# 23/10 - og han sagde at den lå i køkkenets ansøgninger og at ikke længere kunne trykke den frem.
+# Det er bare deres systems gang.
+# """
+#     [_re, _cost] = sentiment_llm_tagging(_txt)
+#     print(type(_re))
+#     for i in _re:
+#         print(i)
+#     print(type(_cost), _cost)
+
+    _txt_neg = """Vores tøj laves på egne fabrikker i Tyrkiet, han regner ikke med at vi kan være med på kvaliteten, desuden er de forpligtet til at bruge deres fabrikker.
+havde lukket sin tøj butik.
+han ringede tilbagede lavede selv deres tøj.
+Overhovedet, har ingen madaffald, da de ingen kantineordning har.
+Intet madaffald siger Charlotte.
+De er godt presset lige nu og skal bare sælge de varer de har.
+Henrik, vi er medlem af en indkøbsforening og de får deres egen producerede varer den vej igennem.
+De har valgt, at de flytter de eksisterende møbler med i den nye lokaler til at starte med.
 """
-    [_re, _cost] = sentiment_llm_tagging(_txt)
-    print(type(_re))
+    [_re, _cost] = sentiment_llm_tagging(_txt_neg)
+    print('neg:', type(_re))
+    for i in _re:
+        print(i)
+    print(type(_cost), _cost)
+    _txt_pos = """Projektet er udskudt til næste år, men stadig i gang.
+projektleder fra ISS skal køre hele husets affaldsprojekt samtidig, så han forventer et efterårs projekt.
+Projektet er stadig aktivt omkring kværn, men det er blevet en del af et større projekt og trækker derfor ud.
+Der er 10! Placering af kværn i køkken virker mulig og rør trækkes over det forsænkdede loft ud til plads, hvor daka spande står idag.
+Lars oplyste, at Susanne sidder med beslutningen, og i forhold til det nye OUH oplyste han, at intet var besluttet, men han kunne se at de gør plads til Køkken i de nyeste tegninger, muligvis en identifikation eller blot en dør på klem.
+Hun vil lige se på Pitaya hjemmesidem, der er alt tøj fra os.
+aftalt møde i uge 28.
+Vil gerne have et møde 22/8/23 kl.
+Skal først bruge møbler til juli, har aftalt at jeg sender min kontakt oplysninger.
+Det er ikke fordi, at de ikke vil have nye møbler i forbindelse med flytningen, men de har ikke haft tid til at gå træffe den endelige beslutning omkring de nye møbler.
+kan vi sælge en t-shirt til 100 kr med tryk på vil se noget først, tag nogle vareprøver med han er i butikken hverdag så vi skal bare stikke hovedet ind vi skal ikke køre for det, så det skal være hvis vi skal der ned alligevel.
+en start pris, på en t-shirt spændene er tilbage fra møde den 3 kl 15 send mail.
+"""
+    [_re, _cost] = sentiment_llm_tagging(_txt_pos)
+    print('pos:', type(_re))
     for i in _re:
         print(i)
     print(type(_cost), _cost)
