@@ -181,49 +181,68 @@ The sentiment classification used to judge whether customers have a positive att
 13) If the customer is willing to cooperate with our requirements, such as confirming the location or renovating the space of our product, etc., it is positive.
 
 Below are some negative and positive examples of sentiment analysis for customer comments in csv format, where the customer's comments are enclosed in double quotes, and after the comma is the sentiment classification of the comments:
-"Haven't chosen a system for Gødstrup, if it were to start before ex Herning, it would have to be the same system as it will be in Gødstrup.", negative
-"på interesse, tidligere udtrykt, at de ikke var interesseret grundet andre interessepunkter.", negative
-"Vores tøj laves på egne fabrikker i Tyrkiet, han regner ikke med at vi kan være med på kvaliteten, desuden er de forpligtet til at bruge deres fabrikker", negative
-"havde lukket sin tøj butik", negative
-"han ringede tilbagede lavede selv deres tøj", negative
-"Overhovedet, har ingen madaffald, da de ingen kantineordning har", negative
-"Intet madaffald siger Charlotte", negative
 "De er godt presset lige nu og skal bare sælge de varer de har", negative
-"Henrik, vi er medlem af en indkøbsforening og de får deres egen producerede varer den vej igennem", negative
 "De har valgt, at de flytter de eksisterende møbler med i den nye lokaler til at starte med", negative
-"We are in good shape if it turns out to be a grind.", positive
-"Note that we are happy to arrange a demonstration.", positive
-"Ok that I call and find out how it goes.", positive
-"Opfølgning på målinger i de andre butikker.", positive
-"på at der altid er lidt mere og obs på at det er efterårsferie, hvis det har noget at sige for omsætningen.", positive
-"Den i Bones kan tages retur efter 2 måneder, den anden er købt.", positive
-indkøbes/faktureres og leveres ca.", positive
-"Møde med Richard og to teknikere.", positive
-"Meget positivt møde.", positive
+"Haven't chosen a system for Gødstrup, if it were to start before ex Herning, it would have to be the same system as it will be in Gødstrup.", negative
+"Henrik, vi er medlem af en indkøbsforening og de får deres egen producerede varer den vej igennem", negative
+"Intet madaffald siger Charlotte", negative
+"Overhovedet, har ingen madaffald, da de ingen kantineordning har", negative
+"Regnskabet i firmaet som dækker over 1½ år afslører at der er 0 ansatte og der har været en OMS på i alt 1000kr. Så der sker tilsyneladende ikke meget i det firma. Det er stadig Klaudia og Giulia der arbejder på at få firmaet i luften.", negative
+"Vores tøj laves på egne fabrikker i Tyrkiet, han regner ikke med at vi kan være med på kvaliteten, desuden er de forpligtet til at bruge deres fabrikker", negative
+"han ringede tilbagede lavede selv deres tøj", negative
+"har hun ikke brug da det er en second hand, hun har", negative
+"havde lukket sin tøj butik", negative
+"kontakt kontoret ring til kæde chef er ved at skære ned på deres leverandører og vil være gode ved dem de har wunderwear samba se om jeg kan finde noget ellers ring igen så har hun et nummer", negative
+"på interesse, tidligere udtrykt, at de ikke var interesseret grundet andre interessepunkter.", negative
+"susanne ejer butikken det gad hun ikke", negative
+"15/8, hvor vi er i Århus alligevel.", positive
 "Der skal fremsendes 3 tilbud: 1) Kværn i opvask, rørføring og tank i skakt og sugeledning ud til ydrevæg.", positive
 "2) Kværn i grøntrum, rørføring ved trappe og isoleret tank i hækken.", positive
 "3) Kværn i grøntrum, rørføring ved trappe og nedgravet tank under hækken.", positive
-"Fundet uge 46 Eva Ejlsskov, måske lederne 11.08.14 JJ De er interesseret i lejeløsning.?.", positive
-"Hej Kirsten Vi talte sammen først på året, og jeg kan fortælle, at vi nu har omkring 40 anlæg stående – disse er fordelt i hele landet, det nærmeste anlæg er hos Legoland i Billund, hvor det evt.", positive
-"Har I noget nyt med hensyn til ombygning i køkkenet ? Venlig Hilsen Jens Jeberg Biotrans Nordic Svendborgvej 243 DK – 5260 Odense SMob.", positive
-"15/8, hvor vi er i Århus alligevel.", positive
-"opfølgning på tilbud om leje og køb - sendt mail d.", positive
-"med opstart af SOSU Nord mødte jeg to damer, som var på inspirations tur det nye køkken på UCN.", positive
+"Burde komme midt uge 38. 18.9: Podier er kommet.", positive
+"De skal finde ud af om de vil have det store eller det lille anlæg. Han regner med at de køber solceller af os. inden for 1 måneds tid kommer der en beslutning.", positive
 "De var meget interesserede og fik materiale med hjem.", positive
-"Men hvis den ikke blev godkendt i år, så bliver den måske næste år.", positive
+"Den i Bones kan tages retur efter 2 måneder, den anden er købt.", positive
 "Den ligger fortsat i ansøgningerne, en ansøgning som de har levet, og stadig er meget positiv for.", positive
-"Projektet er udskudt til næste år, men stadig i gang", positive
-"projektleder fra ISS skal køre hele husets affaldsprojekt samtidig, så han forventer et efterårs projekt", positive
-"Projektet er stadig aktivt omkring kværn, men det er blevet en del af et større projekt og trækker derfor ud", positive
 "Der er 10! Placering af kværn i køkken virker mulig og rør trækkes over det forsænkdede loft ud til plads, hvor daka spande står idag", positive
-"Lars oplyste, at Susanne sidder med beslutningen, og i forhold til det nye OUH oplyste han, at intet var besluttet, men han kunne se at de gør plads til Køkken i de nyeste tegninger, muligvis en identifikation eller blot en dør på klem", positive
-"Hun vil lige se på Pitaya hjemmesidem, der er alt tøj fra os", positive
-"aftalt møde i uge 28", positive
-"Vil gerne have et møde 22/8/23 kl", positive
-"Skal først bruge møbler til juli, har aftalt at jeg sender min kontakt oplysninger", positive
 "Det er ikke fordi, at de ikke vil have nye møbler i forbindelse med flytningen, men de har ikke haft tid til at gå træffe den endelige beslutning omkring de nye møbler", positive
-"kan vi sælge en t-shirt til 100 kr med tryk på vil se noget først, tag nogle vareprøver med han er i butikken hverdag så vi skal bare stikke hovedet ind vi skal ikke køre for det, så det skal være hvis vi skal der ned alligevel", positive
+"Fint møde: Maria sender 3D filer og info om 3D scanning Evt. teams møde uge 39", positive
+"Fundet uge 46 Eva Ejlsskov, måske lederne 11.08.14 JJ De er interesseret i lejeløsning.?.", positive
+"Har I noget nyt med hensyn til ombygning i køkkenet ? Venlig Hilsen Jens Jeberg Biotrans Nordic Svendborgvej 243 DK – 5260 Odense SMob.", positive
+"Hej Bo, Jeg har nu spurgt producenten om et tilbud på shaft sleeve pos. 6605 uden coating/Chrome oxid.Jeg holder dig opdateret.", positive
+"Hej Dag, Tak for et godt møde den 6. september.På mødet talte vi om genindvinding af jernsulfat fra jeres spildevand, på en mere økonomisk måde, ved hjælp af vores filterløsning frem for inddampning eller nedkøling.I den forbindelse foreslog vi at få en spildevandsprøve tilsendt således at vi kan teste det i vores filterløsning.Desværre har er vi ikke selv mulighed for at komme forbi jer og hente en spildevandsprøve.Lad os venligst vide om i har mulighed for sende en prøve til os.På forhånd tak og god weekend.", positive
+"Hej Kirsten Vi talte sammen først på året, og jeg kan fortælle, at vi nu har omkring 40 anlæg stående – disse er fordelt i hele landet, det nærmeste anlæg er hos Legoland i Billund, hvor det evt.", positive
+"Hej NilsJeg er blevet spurgt om der er belægning på shaft sleeve pos. 6605Hvis der er det, har vi brug for certifikat på at det er godkendt til fødevare produktion.Er det noget som du kan svare på?", positive
+"Hun vil lige se på Pitaya hjemmesidem, der er alt tøj fra os", positive
+"Lars oplyste, at Susanne sidder med beslutningen, og i forhold til det nye OUH oplyste han, at intet var besluttet, men han kunne se at de gør plads til Køkken i de nyeste tegninger, muligvis en identifikation eller blot en dør på klem", positive
+"Meget positivt møde.", positive
+"Men hvis den ikke blev godkendt i år, så bliver den måske næste år.", positive
+"Modtaget svar og ny forespørgsel. "Hej Nils.Jeg vender som sagt tilbage, når jeg får et endeligt svar fra dem med pengene. Vedhæftet det røreværk, hvor jeg gerne vil have et tilbud på en ny aksel.Spørgsmål: Bør der ikke være et lille overtryk på akseltætningen ESD34, da der er 2-3 meter væskesøjle over tætningen? "", positive
+"Møde med Richard og to teknikere.", positive
+"Mødet er booket indtil videre med Morten.Desuden; Vi kører nogle projekter på Arla, IT standarder og automationsstandarder, navne standarder bliver det første. De afholder 2 timers undervisning i Viby med automationsfolk fra alle mulige steder og de vil gerne invitere vores kontakt til Arla ind for at være med i den undervisning så vi bedre forstår hvad Arla skal bruge.", positive
+"Note that we are happy to arrange a demonstration.", positive
+"Ok that I call and find out how it goes.", positive
+"Opfølgning på Norge, Ny Dobbelthal samt forbrig, 30 nye stationer i dk. samt 4g dongle i Ikast", positive
+"Opfølgning på målinger i de andre butikker.", positive
+"Projektet er stadig aktivt omkring kværn, men det er blevet en del af et større projekt og trækker derfor ud", positive
+"Projektet er udskudt til næste år, men stadig i gang", positive
+"Rikke@libenodic.dk vil gerne have noget konkret på hvad vi har lavet og nogle pris eksempler hvilke systuer arbejder vi med. er det nogle ordenlige forhold de arbejder under, (det er vigtigt) er det nogle kontrolleret forhold de arbejder under?", positive
+"Skal først bruge møbler til juli, har aftalt at jeg sender min kontakt oplysninger", positive
+"Teamsmøde sammen med Jesper vedr. løsninger og batteri vi opdatere løsningen.", positive
+"Vil gerne have et møde 22/8/23 kl", positive
+"We are in good shape if it turns out to be a grind.", positive
+"aftalt møde i uge 28", positive
+"det har ikke interesse lige numåske til nogle sommer kjoler", positive
 "en start pris, på en t-shirt spændene er tilbage fra møde den 3 kl 15 send mail", positive
+"er interresseret mandag den 18 kl 10 er fedt med kort leveringstid og lavt antal bestillinger, hvilket også ville være godt med børnetøj er lidt skeptisk, men vil gerne have et møde og høre mere om det", positive
+"indkøbes/faktureres og leveres ca.", positive
+"kan vi sælge en t-shirt til 100 kr med tryk på vil se noget først, tag nogle vareprøver med han er i butikken hverdag så vi skal bare stikke hovedet ind vi skal ikke køre for det, så det skal være hvis vi skal der ned alligevel", positive
+"med opstart af SOSU Nord mødte jeg to damer, som var på inspirations tur det nye køkken på UCN.", positive
+"opfølgning på tilbud om leje og køb - sendt mail d.", positive
+"projektleder fra ISS skal køre hele husets affaldsprojekt samtidig, så han forventer et efterårs projekt", positive
+"på at der altid er lidt mere og obs på at det er efterårsferie, hvis det har noget at sige for omsætningen.", positive
+"ring onsdag, torsdag eller fredag skal have fat Michael han står for indkøb og er medejerehan er tilbage mandag om 8 dage okse rød skjorte ca pris på den skorte", positive
+"send info priser kvaliteter var interesseret vil gerne have noget info og piser", positive
 """,
             },
             "why": {

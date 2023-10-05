@@ -81,3 +81,32 @@
 "kan vi sælge en t-shirt til 100 kr med tryk på vil se noget først, tag nogle vareprøver med han er i butikken hverdag så vi skal bare stikke hovedet ind vi skal ikke køre for det, så det skal være hvis vi skal der ned alligevel", positive
 "projektleder fra ISS skal køre hele husets affaldsprojekt samtidig, så han forventer et efterårs projekt", positive
 "status på projektet?", neutral
+
+
+"Slibning af tankbund tank 82C MB - slibeservice kan 29 eller 30/08 - Afv. møde med NNE Efter slibning skal tanken vaskes. Afmontering og rengøring af rust og slibestøv. ", neutral
+"Hej Dag, Tak for et godt møde den 6. september.På mødet talte vi om genindvinding af jernsulfat fra jeres spildevand, på en mere økonomisk måde, ved hjælp af vores filterløsning frem for inddampning eller nedkøling.I den forbindelse foreslog vi at få en spildevandsprøve tilsendt således at vi kan teste det i vores filterløsning.Desværre har er vi ikke selv mulighed for at komme forbi jer og hente en spildevandsprøve.Lad os venligst vide om i har mulighed for sende en prøve til os.På forhånd tak og god weekend.", positive
+"Fjedre uden 3.1 certifikat Forsendelse er sendt fra Ekato d. 14/09", neutral
+"Henrik bad om en liste med alle sagerne på mail. Han kigger dem igen og sende kommentar tilbage. Lars Lynderup Hansen svarer ikke. Lagt besked på svarer Lars oplyser at den har vi leveret", neutral
+"Hej NilsJeg er blevet spurgt om der er belægning på shaft sleeve pos. 6605Hvis der er det, har vi brug for certifikat på at det er godkendt til fødevare produktion.Er det noget som du kan svare på?", positive
+"Hej Bo, Jeg har nu spurgt producenten om et tilbud på shaft sleeve pos. 6605 uden coating/Chrome oxid.Jeg holder dig opdateret.", positive
+"har hun ikke brug da det er en second hand, hun har", negative
+"Mødet er booket indtil videre med Morten.Desuden; Vi kører nogle projekter på Arla, IT standarder og automationsstandarder, navne standarder bliver det første. De afholder 2 timers undervisning i Viby med automationsfolk fra alle mulige steder og de vil gerne invitere vores kontakt til Arla ind for at være med i den undervisning så vi bedre forstår hvad Arla skal bruge.", positive
+"Rikke@libenodic.dk vil gerne have noget konkret på hvad vi har lavet og nogle pris eksempler hvilke systuer arbejder vi med. er det nogle ordenlige forhold de arbejder under, (det er vigtigt) er det nogle kontrolleret forhold de arbejder under?", positive
+"ring onsdag, torsdag eller fredag skal have fat Michael han står for indkøb og er medejerehan er tilbage mandag om 8 dage okse rød skjorte ca pris på den skorte", positive
+"De skal finde ud af om de vil have det store eller det lille anlæg. Han regner med at de køber solceller af os. inden for 1 måneds tid kommer der en beslutning.", positive
+"det har ikke interesse lige numåske til nogle sommer kjoler", positive
+"Teamsmøde sammen med Jesper vedr. løsninger og batteri vi opdatere løsningen.", positive
+"Fint møde: Maria sender 3D filer og info om 3D scanning Evt. teams møde uge 39", positive
+"kontakt kontoret ring til kæde chef er ved at skære ned på deres leverandører og vil være gode ved dem de har wunderwear samba se om jeg kan finde noget ellers ring igen så har hun et nummer", negative
+"Modtaget svar og ny forespørgsel. "Hej Nils.Jeg vender som sagt tilbage, når jeg får et endeligt svar fra dem med pengene. Vedhæftet det røreværk, hvor jeg gerne vil have et tilbud på en ny aksel.Spørgsmål: Bør der ikke være et lille overtryk på akseltætningen ESD34, da der er 2-3 meter væskesøjle over tætningen? "", positive
+"Burde komme midt uge 38. 18.9: Podier er kommet.", positive
+"Mødet er booket indtil videre med Morten.Desuden; Vi kører nogle projekter på Arla, IT standarder og automationsstandarder, navne standarder bliver det første. De afholder 2 timers undervisning i Viby med automationsfolk fra alle mulige steder og de vil gerne invitere vores kontakt til Arla ind for at være med i den undervisning så vi bedre forstår hvad Arla skal bruge.", positive
+"er interresseret mandag den 18 kl 10 er fedt med kort leveringstid og lavt antal bestillinger, hvilket også ville være godt med børnetøj er lidt skeptisk, men vil gerne have et møde og høre mere om det", positive
+"ring onsdag, torsdag eller fredag skal have fat Michael han står for indkøb og er medejerehan er tilbage mandag om 8 dage okse rød skjorte ca pris på den skorte", positive
+"Rikke@libenodic.dk vil gerne have noget konkret på hvad vi har lavet og nogle pris eksempler hvilke systuer arbejder vi med. er det nogle ordenlige forhold de arbejder under, (det er vigtigt) er det nogle kontrolleret forhold de arbejder under?", positive
+"send info priser kvaliteter var interesseret vil gerne have noget info og piser", positive
+"Regnskabet i firmaet som dækker over 1½ år afslører at der er 0 ansatte og der har været en OMS på i alt 1000kr. Så der sker tilsyneladende ikke meget i det firma. Det er stadig Klaudia og Giulia der arbejder på at få firmaet i luften.", negative
+"susanne ejer butikken det gad hun ikke", negative
+"kontakt kontoret ring til kæde chef er ved at skære ned på deres leverandører og vil være gode ved dem de har wunderwear samba se om jeg kan finde noget ellers ring igen så har hun et nummer", negative
+"Opfølgning på Norge, Ny Dobbelthal samt forbrig, 30 nye stationer i dk. samt 4g dongle i Ikast", positive
+
