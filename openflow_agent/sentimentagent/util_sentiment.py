@@ -157,7 +157,8 @@ def sentiment_openai_tagging(txt_lines):
     from dotenv import load_dotenv
     load_dotenv()
     from langchain.chat_models import ChatOpenAI
-    llm = ChatOpenAI(temperature=0)
+    import os
+    llm = ChatOpenAI(temperature=0, model_name=os.getenv('OPENAI_MODEL'))
     #####
     schema = {
         "properties": {
